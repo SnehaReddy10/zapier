@@ -51,10 +51,10 @@ model Trigger {
 
 model zaps {
   zapId  String @unique
-  userId String @unique
+  userId String
 }
 
 model zapRun {
   zapId  String @unique
-  userId String @unique
+  userId String
 }

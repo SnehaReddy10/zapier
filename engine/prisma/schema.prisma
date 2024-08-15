@@ -48,3 +48,13 @@ model Trigger {
   zap                Zap?              @relation(fields: [zapId], references: [id])
   zapId              String            @unique
 }
+
+model zaps {
+  zapId  String @unique
+  userId String @unique
+}
+
+model zapRun {
+  zapId  String @unique
+  userId String @unique
+}

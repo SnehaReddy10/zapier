@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 export const zapRouter = express.Router();
 const prismaClient = new PrismaClient();
 
-zapRouter.post('/', async (req, res) => {
+zapRouter.post('', async (req, res) => {
   const { trigger, actions } = req.body;
 
   const zap = await prismaClient.zap.create({

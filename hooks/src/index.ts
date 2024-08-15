@@ -4,10 +4,15 @@ import express from 'express';
 const app = express();
 const prismaClient = new PrismaClient();
 
-app.post('/:userId/:zapId', (req, res) => {
+app.post('/:userId/:zapId', async (req, res) => {
   const { userId, zapId } = req.params;
-  console.log(userId, zapId);
 
+  const [zaps, zapRuns] = await prismaClient.$transaction([
+    prismaClient.zaps.create({ data: { zapId, userId } }),
+    prismaClient.zapRun.create({ data: { zapId, userId } }),
+  ]);
+
+  console.log(zaps, zapRuns);
   res.json({ success: true });
 });
 

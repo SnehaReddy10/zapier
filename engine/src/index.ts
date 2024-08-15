@@ -9,7 +9,12 @@ const app = express();
 app.use(express.json());
 const prismaClient = new PrismaClient();
 
-async function main() {}
+async function main() {
+  app.use('/admin', adminRouter);
+  app.use('/trigger', triggerRouter);
+  app.use('/action', actionRouter);
+  app.use('/zap', zapRouter);
+}
 
 main()
   .then(async () => await prismaClient.$disconnect())

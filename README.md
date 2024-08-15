@@ -1,6 +1,6 @@
 # Zapier
 
-![Thumbnail](public/architecture.png)
+![Thumbnail](architecture.png)
 
 ## Technologies
 

@@ -12,7 +12,6 @@ app.post('/:userId/:zapId', async (req, res) => {
     prismaClient.zapRun.create({ data: { zapId, userId } }),
   ]);
 
-  console.log(zaps, zapRuns);
   res.json({ success: true });
 });
 

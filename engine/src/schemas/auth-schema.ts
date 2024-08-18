@@ -15,3 +15,8 @@ export const createUserSchema = z.object({
     .min(6, 'Password must be at least 6 characters long')
     .max(100, 'Password is too long'),
 });
+
+export const loginUserSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string(),
+});

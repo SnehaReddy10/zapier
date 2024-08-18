@@ -4,12 +4,14 @@ import { adminRouter } from './routes/admin';
 import { triggerRouter } from './routes/trigger';
 import { zapRouter } from './routes/zap';
 import { actionRouter } from './routes/action';
+import { authRouter } from './routes/auth';
 
 const app = express();
 app.use(express.json());
 const prismaClient = new PrismaClient();
 
 async function main() {
+  app.use('/auth', authRouter);
   app.use('/admin', adminRouter);
   app.use('/trigger', triggerRouter);
   app.use('/action', actionRouter);
@@ -23,4 +25,4 @@ main()
     await prismaClient.$disconnect();
   });
 
-app.listen(3000, () => console.log('Listening on port 3000'));
+app.listen(3005, () => console.log('Listening on port 3005'));

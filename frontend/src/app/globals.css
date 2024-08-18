@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base{
+  .text-xxs{
+    @apply text-[0.65rem]
+  }
+
+  .text-xxxs{
+    @apply text-[0.65rem]
+  }
+
+  body{
+    @apply bg-[#fffdf9]
+  }
+}

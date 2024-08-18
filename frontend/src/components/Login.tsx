@@ -5,14 +5,24 @@ import InputBox from './InputBox';
 import Button from './buttons/Button';
 import AuthButton from './buttons/AuthButton';
 import { useState } from 'react';
+import { LoginUser } from '@/api/auth';
+import { useRouter } from 'next/navigation';
 
 export function Login() {
-  const [email, setEmail] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
+  const router = useRouter();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const handleSetEmail = (e: string) => setEmail(e);
   const handleSetPassword = (e: string) => setPassword(e);
-  const loginUser = () => console.log(email, password);
+  const loginUser = async () => {
+    const result = await LoginUser({ email, password });
+    if (result.success) {
+      setEmail('');
+      setPassword('');
+      router.push('/dashboard');
+    }
+  };
 
   return (
     <div className="flex flex-col mx-10 justify-center py-5">
@@ -56,8 +66,8 @@ export function Login() {
           required={true}
         />
         <Button
-          onSubmit={loginUser}
-          disabled={email == null || password == null}
+          onClick={loginUser}
+          disabled={email == '' || password == ''}
           text="Continue"
           className="w-full py-1 disabled disabled:bg-gray-200"
         />

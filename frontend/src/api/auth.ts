@@ -27,6 +27,29 @@ export async function CreateUser({
     return result.data;
   } catch (err: any) {
     console.log(err.response.data.error);
-    return err.response.data.error;
+    return { success: false, error: err.response.data.error };
+  }
+}
+
+export async function LoginUser({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
+  try {
+    const result = await axios.post(`${BACKEND_URL}/auth/login`, {
+      email,
+      password,
+    });
+    const { success, token } = result.data;
+    if (success) {
+      localStorage.setItem(TOKEN, token);
+    }
+    return result.data;
+  } catch (err: any) {
+    console.log(err.response.data.error);
+    return { success: false, error: err.response.data.error };
   }
 }

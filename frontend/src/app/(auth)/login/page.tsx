@@ -4,9 +4,9 @@ import AuthButton from '@/components/buttons/AuthButton';
 function Login() {
   return (
     <div className="flex flex-col text-center justify-center items-center gap-1">
-      <div className="flex justify-center items-center max-w-3xl">
+      <div className="flex justify-center items-center max-w-4xl">
         <div className="grid grid-cols-2 gap-2 items-center">
-          <div className="flex flex-col gap-3 m-8">
+          <div className="flex flex-col text-start gap-3 m-8">
             <h1 className="font-semibold text-2xl font-sans">
               Automate across your teams
             </h1>

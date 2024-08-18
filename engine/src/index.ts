@@ -11,11 +11,11 @@ app.use(express.json());
 const prismaClient = new PrismaClient();
 
 async function main() {
-  app.use('/auth', authRouter);
-  app.use('/admin', adminRouter);
-  app.use('/trigger', triggerRouter);
-  app.use('/action', actionRouter);
-  app.use('/zap', zapRouter);
+  app.use('/api/v1/auth', authRouter);
+  app.use('/api/v1/admin', adminRouter);
+  app.use('/api/v1/trigger', triggerRouter);
+  app.use('/api/v1/action', actionRouter);
+  app.use('/api/v1/zap', zapRouter);
 }
 
 main()

@@ -21,7 +21,7 @@ function Navbar() {
         />
         <LinkButton text="Contact Sales" link="contact-sales" />
         <LinkButton text="Log in" link="login" />
-        <Button text="Sign up" link="signup" size="sm" primary={true} />
+        <Button text="Sign up" link="sign-up" size="sm" primary={true} />
       </div>
     </div>
   );

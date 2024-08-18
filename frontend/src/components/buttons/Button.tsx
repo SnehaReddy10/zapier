@@ -9,9 +9,11 @@ function Button({
   showIcon,
   className,
   disabled,
+  onClick,
 }: any) {
   return (
     <button
+      onClick={onClick}
       disabled={disabled}
       className={`${className} ${
         disabled

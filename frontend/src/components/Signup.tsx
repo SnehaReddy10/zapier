@@ -1,9 +1,26 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import AuthButton from './buttons/AuthButton';
 import InputBox from './InputBox';
 import Button from './buttons/Button';
+import { CreateUser } from '@/api/auth';
 
 export function Signup() {
+  const [firstname, setFirstName] = useState<string>('');
+  const [lastname, setlastName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const handleSetFirstName = (e: string) => setFirstName(e);
+  const handleSetLastName = (e: string) => setlastName(e);
+  const handleSetEmail = (e: string) => setEmail(e);
+  const handleSetPassword = (e: string) => setPassword(e);
+  const createUser = () => {
+    console.log({ firstname, lastname, email, password });
+    CreateUser({ firstname, lastname, email, password });
+  };
+
   return (
     <div>
       {' '}
@@ -18,12 +35,31 @@ export function Signup() {
           <span className="text-xxs text-gray-500 font-semibold">OR</span>
           <p className="w-full border-b-[1px] border-gray-200" />
         </div>
-        <InputBox label="Work Email" required={true} />
+        <InputBox
+          onChange={(e) => handleSetEmail(e)}
+          label="Work Email"
+          required={true}
+        />
         <div className="grid grid-cols-2 gap-2">
-          <InputBox label="First Name" required={true} />
-          <InputBox label="Last Name" required={true} />
+          <InputBox
+            label="First Name"
+            required={true}
+            onChange={(e) => handleSetFirstName(e)}
+          />
+          <InputBox
+            onChange={(e) => handleSetLastName(e)}
+            label="Last Name"
+            required={true}
+          />
         </div>
+        <InputBox
+          type="password"
+          onChange={(e) => handleSetPassword(e)}
+          label="Password"
+          required={true}
+        />
         <Button
+          onClick={createUser}
           primary={true}
           text="Get started free"
           className="w-full py-1"

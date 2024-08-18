@@ -1,9 +1,19 @@
+'use client';
+
 import React from 'react';
 import InputBox from './InputBox';
 import Button from './buttons/Button';
 import AuthButton from './buttons/AuthButton';
+import { useState } from 'react';
 
 export function Login() {
+  const [email, setEmail] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+
+  const handleSetEmail = (e: string) => setEmail(e);
+  const handleSetPassword = (e: string) => setPassword(e);
+  const loginUser = () => console.log(email, password);
+
   return (
     <div className="flex flex-col mx-10 justify-center py-5">
       <h2 className="font-sans font-semibold">Log in to your account</h2>
@@ -33,9 +43,21 @@ export function Login() {
           <span className="text-xxxs text-gray-500 font-semibold">OR</span>
           <p className="w-full border-b-[1px] border-gray-200" />
         </div>
-        <InputBox placeHolder="Email" label="Email" required={true} />
+        <InputBox
+          onChange={handleSetEmail}
+          placeHolder="Email"
+          label="Email"
+          required={true}
+        />
+        <InputBox
+          onChange={handleSetPassword}
+          placeHolder="Password"
+          label="Password"
+          required={true}
+        />
         <Button
-          disabled={true}
+          onSubmit={loginUser}
+          disabled={email == null || password == null}
           text="Continue"
           className="w-full py-1 disabled disabled:bg-gray-200"
         />

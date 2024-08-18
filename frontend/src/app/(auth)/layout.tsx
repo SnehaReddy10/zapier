@@ -14,7 +14,7 @@ export default function AuthLayout({
   const isLogin = pathname.includes('login');
 
   return (
-    <div className="mx-10">
+    <div className="px-10">
       <div className="border-b-[1px] border-gray-200">
         <div className="flex justify-between px-40 py-2">
           <p className="font-[800] text-xl">

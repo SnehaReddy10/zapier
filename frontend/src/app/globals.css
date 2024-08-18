@@ -9,7 +9,7 @@
   }
 
   .text-xxxs{
-    @apply text-[0.65rem]
+    @apply text-[0.55rem]
   }
 
   body{

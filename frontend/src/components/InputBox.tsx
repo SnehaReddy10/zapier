@@ -1,6 +1,6 @@
 import { RiAsterisk } from 'react-icons/ri';
 
-function InputBox({ label, required }: any) {
+function InputBox({ label, required, placeHolder }: any) {
   return (
     <div className="w-full flex flex-col gap-1">
       <label className="text-xxs flex gap-1">
@@ -10,7 +10,8 @@ function InputBox({ label, required }: any) {
       </label>
       <input
         type="text"
-        className="border-[1px] border-gray-400 rounded-sm h-8"
+        placeholder={placeHolder}
+        className="border-[1px] text-xs px-2 font-medium border-gray-400 rounded-sm h-8"
       />
     </div>
   );

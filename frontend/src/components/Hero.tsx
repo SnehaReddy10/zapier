@@ -13,7 +13,12 @@ function Hero() {
         work for you.
       </h4>
       <div className="flex gap-3 justify-center">
-        <Button size="xl" text="Start with free email" primary={true} />
+        <Button
+          link="/sign-up"
+          size="xl"
+          text="Start with free email"
+          primary={true}
+        />
         <Button size="xl" text="Start free with Google" showIcon={true} />
       </div>
       <div className="flex mt-2 gap-3 justify-center text-xxs">

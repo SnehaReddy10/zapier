@@ -23,7 +23,7 @@ authRouter.post('/signup', async (req, res) => {
     if (!success) {
       return res
         .status(STATUS_CODES.BadRequest)
-        .json({ success: true, error: error.errors.map((x) => x.message) });
+        .json({ success: false, error: error.errors.map((x) => x.message) });
     }
 
     const existingUser = await prismaClient.user.findFirst({

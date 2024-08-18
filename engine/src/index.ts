@@ -5,9 +5,12 @@ import { triggerRouter } from './routes/trigger';
 import { zapRouter } from './routes/zap';
 import { actionRouter } from './routes/action';
 import { authRouter } from './routes/auth';
+import cors from 'cors';
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const prismaClient = new PrismaClient();
 
 async function main() {

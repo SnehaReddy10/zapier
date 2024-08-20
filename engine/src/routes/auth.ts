@@ -1,6 +1,10 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
-import { GENERIC, USER } from '../constants/error-messages';
+import {
+  GENERIC,
+  USER_ERROR_CODE,
+  USER_ERROR_MESSAGE,
+} from '../constants/error-messages';
 import { STATUS_CODES } from '../constants/status-codes';
 import jwt from 'jsonwebtoken';
 import { JWT_TOKEN } from '../config';
@@ -31,9 +35,13 @@ authRouter.post('/signup', async (req, res) => {
     });
 
     if (existingUser) {
-      return res
-        .status(STATUS_CODES.BadRequest)
-        .json({ success: false, error: USER.ALREADY_EXISTS });
+      return res.status(STATUS_CODES.BadRequest).json({
+        success: false,
+        error: {
+          message: USER_ERROR_MESSAGE.ALREADY_EXISTS,
+          code: USER_ERROR_CODE.ALREADY_EXISTS,
+        },
+      });
     }
 
     const newUser = await prismaClient.user.create({
@@ -71,9 +79,13 @@ authRouter.post('/login', async (req, res) => {
     });
 
     if (!user) {
-      return res
-        .status(STATUS_CODES.NotFound)
-        .json({ success: false, error: USER.NOT_FOUND });
+      return res.status(STATUS_CODES.NotFound).json({
+        success: false,
+        error: {
+          message: USER_ERROR_MESSAGE.NOT_FOUND,
+          code: USER_ERROR_CODE.NOT_FOUND,
+        },
+      });
     }
 
     const token = jwt.sign({ id: user.id, email }, JWT_TOKEN);

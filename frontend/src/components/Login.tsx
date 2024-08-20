@@ -20,7 +20,7 @@ export function Login() {
     if (result.success) {
       setEmail('');
       setPassword('');
-      router.push('/dashboard');
+      router.push('/zaps');
     }
   };
 

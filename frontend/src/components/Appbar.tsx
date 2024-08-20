@@ -1,3 +1,5 @@
+'use client';
+
 import { LiaSearchSolid } from 'react-icons/lia';
 import Logo from './Logo';
 import TertiaryButton from './buttons/TertiaryButton';
@@ -29,6 +31,7 @@ function Appbar() {
             <p>Contact Sales</p>
           </div>
           <TertiaryButton
+            onclick={() => {}}
             text="Upgrade"
             className="bg-[#695be8] text-white hover:bg-[#503ebd]"
           />

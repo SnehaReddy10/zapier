@@ -14,6 +14,9 @@ function Zap({ zap }: { zap: ZapSchema }) {
   const router = useRouter();
 
   const currentTime = new Date();
+  const mins = currentTime.getMinutes() - zap.lastEdit.getMinutes();
+  const hours = currentTime.getHours() - zap.lastEdit.getHours();
+
   return (
     <tr
       className={`flex gap-4 items-center py-1 border-b-[2px] border-[#ece9df] ${
@@ -68,17 +71,10 @@ function Zap({ zap }: { zap: ZapSchema }) {
       >
         {zap.title}
       </td>
-
-      {currentTime.getMinutes() - zap.lastEdit.getMinutes() < 1 && (
-        <td>Just now</td>
-      )}
-      {currentTime.getMinutes() - zap.lastEdit.getMinutes() > 1 &&
-        currentTime.getMinutes() - zap.lastEdit.getMinutes() < 59 && (
-          <td>{currentTime.getMinutes() - zap.lastEdit.getMinutes()}m ago</td>
-        )}
-      {currentTime.getHours() - zap.lastEdit.getHours() < 24 && (
-        <td>{currentTime.getHours() - zap.lastEdit.getHours()}hr ago</td>
-      )}
+      {mins < 1 && <td>Just now</td>}
+      {mins > 1 && mins < 59 && <td>{mins}m ago</td>}
+      {mins > 59 && hours < 24 && <td>{hours}hr ago</td>}
+      {hours > 23 && <td>{hours / 24}days ago</td>}
       <td>
         <div className="relative">
           <p className="h-2 rounded-full w-5 bg-slate-400"></p>

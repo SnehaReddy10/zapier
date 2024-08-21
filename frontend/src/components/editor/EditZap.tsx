@@ -39,11 +39,11 @@ function EditZap() {
         ))}
       </div>
       <div className="flex flex-col gap-2 m-2 border-[#d7d5d2] border-b-[1px]">
-        <p className="flex gap-2 items-center m-1 rounded-sm px-1 py-1 border-[#eaeae4] border-[1px]  cursor-pointer">
+        <div className="flex gap-2 items-center m-1 rounded-sm px-1 py-1 border-[#eaeae4] border-[1px]  cursor-pointer">
           <RiNotionLine size={18} />
           <span className="flex flex-1 font-bold">Notion</span>
           <SecondaryButton text="Change" />
-        </p>
+        </div>
       </div>
     </div>
   );

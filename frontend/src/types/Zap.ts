@@ -16,13 +16,15 @@ export enum ZapCellType {
 }
 
 export type Action = {
-  name: string;
+  action: string;
   interval: string;
   description: string;
+  event: string;
 };
 
 export type Trigger = {
   name: string;
   interval: string;
   description: string;
+  event: string;
 };

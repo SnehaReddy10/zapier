@@ -26,7 +26,11 @@ zapRouter.get('/:zapId', authMiddleware, async (req, res) => {
 
     const zap = await prismaClient.zap.findFirst({
       where: { id: zapId, userId: req.userId },
-      select: { User: true, trigger: true, actions: true },
+      select: {
+        User: true,
+        trigger: true,
+        actions: { select: { action: true } },
+      },
     });
     res.json({ success: true, zap });
   } catch (err) {

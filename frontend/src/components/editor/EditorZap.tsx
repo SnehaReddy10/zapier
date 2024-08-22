@@ -1,47 +1,38 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 import { LuClock4 } from 'react-icons/lu';
 import { RiErrorWarningFill, RiNotionLine } from 'react-icons/ri';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import AddButton from '../buttons/AddButton';
 import { FiZap } from 'react-icons/fi';
-
-export enum ZapCellType {
-  trigger,
-  action,
-}
-
-type Action = {
-  name: string;
-  interval: string;
-  description: string;
-};
-
-type Trigger = {
-  name: string;
-  interval: string;
-  description: string;
-};
+import { Action, Trigger, ZapCellType } from '@/types/Zap';
 
 function EditorZap({
   type,
   action,
   trigger,
   index,
+  addAction,
   onClick,
 }: {
   type: ZapCellType;
   action?: Action;
   trigger?: Trigger;
   index: number;
-  onClick: () => void;
+  addAction: () => void;
+  onClick: (type: ZapCellType) => void;
 }) {
   const [showMoveIcon, setShowMoveIcon] = useState(false);
 
   return (
-    <div className="flex gap-2">
+    <div
+      className="flex gap-2"
+      onClick={() => {
+        onClick(type);
+      }}
+    >
       <div
         className="flex flex-col items-center"
         onMouseEnter={() => setShowMoveIcon((m) => !m)}
@@ -111,7 +102,7 @@ function EditorZap({
         )}
 
         <div className="bg-gradient-to-t from-[#5140bf] via-[#5140bf] to-white h-6 w-[2px]"></div>
-        <AddButton onClick={onClick} />
+        <AddButton onClick={addAction} />
       </div>
     </div>
   );

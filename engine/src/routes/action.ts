@@ -12,3 +12,8 @@ actionRouter.post('/', async (req, res) => {
   });
   res.json({ success: true, newAction });
 });
+
+actionRouter.get('/availableActions', async (req, res) => {
+  const availableActions = await prismaClient.availableActions.findMany();
+  return res.json({ success: true, availableActions });
+});

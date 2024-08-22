@@ -14,26 +14,26 @@ function Appbar() {
         <Logo className="text-base" />
       </div>
       <div className="flex gap-2 items-center">
-        <div className="flex items-center gap-1 hover:bg-[#f5f3eb] rounded-sm px-2 py-[2px] cursor-pointer">
+        <div className="flex items-center gap-1 hover:bg-gray-300 rounded-sm px-2 py-[2px] cursor-pointer">
           <LiaSearchSolid color="#463d3b" size={20} />
           <p>Search</p>
         </div>
-        <div className="flex items-center gap-1 hover:bg-[#f5f3eb] rounded-sm px-2 py-[2px] cursor-pointer">
+        <div className="flex items-center gap-1 hover:bg-gray-300 rounded-sm px-2 py-[2px] cursor-pointer">
           <IoIosHelpCircleOutline color="#463d3b" size={20} />
           <p>Help</p>
         </div>
-        <div className="flex items-center gap-1 hover:bg-[#f5f3eb] rounded-sm px-2 py-[2px] cursor-pointer">
+        <div className="flex items-center gap-1 hover:bg-gray-300 rounded-sm px-2 py-[2px] cursor-pointer">
           <IoIosGlobe color="#463d3b" size={20} />
           <p>Explore Zapier</p>
         </div>
         <div className="flex gap-2">
-          <div className="flex items-center gap-1 hover:bg-[#f5f3eb] rounded-sm border-[#e6e2db] border-[1px] px-2 py-[2px]">
+          <div className="flex items-center gap-1 hover:bg-gray-300 rounded-sm border-gray-100 border-[1px] px-2 py-[2px]">
             <p>Contact Sales</p>
           </div>
           <TertiaryButton
             onclick={() => {}}
             text="Upgrade"
-            className="bg-[#695be8] text-white hover:bg-[#503ebd]"
+            className="bg-purple-700 text-white hover:bg-purple-800"
           />
           <button className="rounded-full bg-[#2d2e2e] text-white text-xs p-1">
             SR

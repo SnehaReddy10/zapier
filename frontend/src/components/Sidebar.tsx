@@ -44,7 +44,7 @@ function Sidebar() {
             link={x.link}
             icon={x.icon}
             text={x.text}
-            className={`p-1 m-[2px] hover:bg-[#f5f3eb] cursor-pointer ${
+            className={`p-1 m-[2px] hover:bg-gray-300 cursor-pointer ${
               pathname.includes(x.link) ? 'bg-[#fdf5f2] hover:bg-[#fdf5f2]' : ''
             }`}
           />

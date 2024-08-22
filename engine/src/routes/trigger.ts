@@ -10,5 +10,10 @@ triggerRouter.post('/', async (req, res) => {
   const newTrigger = await prismaClient.trigger.create({
     data: { trigger, zapId },
   });
-  res.json({ success: true, newTrigger });
+  return res.json({ success: true, newTrigger });
+});
+
+triggerRouter.get('', async (req, res) => {
+  const avaibaleTriggers = await prismaClient.availableTriggers.findMany();
+  return res.json({ success: true, avaibaleTriggers });
 });

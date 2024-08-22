@@ -1,12 +1,43 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 import { LuClock4 } from 'react-icons/lu';
 import { RiErrorWarningFill, RiNotionLine } from 'react-icons/ri';
 import { RxDragHandleDots2 } from 'react-icons/rx';
+import AddButton from '../buttons/AddButton';
+import { FiZap } from 'react-icons/fi';
 
-function EditorZap({ first = false }: { first?: boolean }) {
+export enum ZapCellType {
+  trigger,
+  action,
+}
+
+type Action = {
+  name: string;
+  interval: string;
+  description: string;
+};
+
+type Trigger = {
+  name: string;
+  interval: string;
+  description: string;
+};
+
+function EditorZap({
+  type,
+  action,
+  trigger,
+  index,
+  onClick,
+}: {
+  type: ZapCellType;
+  action?: Action;
+  trigger?: Trigger;
+  index: number;
+  onClick: () => void;
+}) {
   const [showMoveIcon, setShowMoveIcon] = useState(false);
 
   return (
@@ -16,38 +47,71 @@ function EditorZap({ first = false }: { first?: boolean }) {
         onMouseEnter={() => setShowMoveIcon((m) => !m)}
         onMouseLeave={() => setShowMoveIcon((m) => !m)}
       >
-        {!first && (
+        {type == ZapCellType.action && (
           <div className="bg-gradient-to-b from-[#5140bf] via-[#5140bf] to-white h-6 w-[2px]"></div>
         )}
-        <div className="flex gap-2 items-center">
-          <RxDragHandleDots2
-            color={`${showMoveIcon ? 'gray' : '#f7f5f2'}`}
-            className="cursor-pointer"
-          />
-          <div className="flex cursor-pointer hover:border-[#5949c1] border-[1px] transition-all ease-linear h-max flex-col rounded-md bg-white shadow-lg text-[#3b3c3c] shadow-gray-200 gap-2 text-xxxs py-2 w-56 px-2 font-semibold">
-            <div className="flex gap-2 items-center justify-between">
-              <div className="flex gap-2 items-center">
-                <RiErrorWarningFill color="#ffc43e" fill="#ffc43e" size={18} />
-                <p className="flex items-center px-1 py-[2px] border-[#eaeae4] border-[1px]  cursor-pointer">
-                  <RiNotionLine size={18} />
-                  <span>Notion</span>
-                </p>
-                <p className="bg-[#f6ffdb] px-1 py-[2px] border-[1px] border-[#eaeae4] items-center rounded-sm flex gap-1 cursor-pointer">
-                  <LuClock4 size={18} />2 min
+
+        {!action && !trigger && (
+          <div className="flex gap-2 items-center">
+            <div className="flex cursor-pointer border-[#2d2e2e] hover:border-[#5949c1] border-dotted active:border-[#5949c1] border-[1px] transition-all ease-linear h-max flex-col rounded-md bg-white shadow-lg text-[#3b3c3c] shadow-gray-200 gap-2 text-xxxs py-2 w-56 px-2 font-semibold">
+              <div className="flex gap-2 items-center justify-between">
+                <p className="flex items-center px-1 py-[2px] bg-[#e8e7e4] border-[#313232] border-[1px]  cursor-pointer rounded-sm">
+                  <span className="bg-[#313232] p-[3px] rounded-full mr-1">
+                    <FiZap color="white" fill="white" size={10} />
+                  </span>
+                  <span>
+                    {type == ZapCellType.action ? 'Action' : 'Trigger'}
+                  </span>
                 </p>
               </div>
-              <p className="py-1 px-[2px] border-[1px] hover:bg-[#f7f6fd] border-white rounded-sm cursor-pointer hover:border-[1px] hover:border-[#695be8]">
-                <HiDotsVertical size={18} />
+              <p>
+                {index}.
+                <span className="text-[#9a9793]">
+                  {type == ZapCellType.action
+                    ? 'Select the event for your Zap to run'
+                    : 'Select the event that runs your Zap'}
+                </span>
               </p>
             </div>
-            <p>1. Updated Page</p>
           </div>
-        </div>
+        )}
+
+        {(action || trigger) && (
+          <div className="flex gap-2 items-center">
+            <RxDragHandleDots2
+              color={`${showMoveIcon ? 'gray' : '#f7f5f2'}`}
+              className="cursor-pointer"
+            />
+            <div className="flex cursor-pointer hover:border-[#5949c1] active:border-[#5949c1] border-[1px] transition-all ease-linear h-max flex-col rounded-md bg-white shadow-lg text-[#3b3c3c] shadow-gray-200 gap-2 text-xxxs py-2 w-56 px-2 font-semibold">
+              <div className="flex gap-2 items-center justify-between">
+                <div className="flex gap-2 items-center">
+                  <RiErrorWarningFill
+                    color="#ffc43e"
+                    fill="#ffc43e"
+                    size={18}
+                  />
+                  <p className="flex items-center px-1 py-[2px] border-[#eaeae4] border-[1px]  cursor-pointer">
+                    <RiNotionLine size={18} />
+                    <span>{trigger?.name ?? action?.name}</span>
+                  </p>
+                  <p className="bg-[#f6ffdb] px-1 py-[2px] border-[1px] border-[#eaeae4] items-center rounded-sm flex gap-1 cursor-pointer">
+                    <LuClock4 size={18} />
+                    {trigger?.interval ?? action?.interval}
+                  </p>
+                </div>
+                <p className="py-1 px-[2px] border-[1px] hover:bg-[#f7f6fd] border-white rounded-sm cursor-pointer hover:border-[1px] hover:border-[#695be8]">
+                  <HiDotsVertical size={18} />
+                </p>
+              </div>
+              <p>
+                {index}.{trigger?.description ?? action?.description}
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="bg-gradient-to-t from-[#5140bf] via-[#5140bf] to-white h-6 w-[2px]"></div>
-        <div className="my-1 text-[#5140bf] hover:cursor-pointer w-5 h-5 flex justify-center items-center hover:text-white transition-all ease-linear hover:bg-[#5140bf] rounded-full">
-          +
-        </div>
+        <AddButton onClick={onClick} />
       </div>
     </div>
   );

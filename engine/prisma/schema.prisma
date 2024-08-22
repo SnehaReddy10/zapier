@@ -18,6 +18,7 @@ model AvailableActions {
   action   String
   metaData String
   Action   Action[]
+  image    String?
 }
 
 model AvailableTriggers {
@@ -25,6 +26,7 @@ model AvailableTriggers {
   trigger  String
   metaData String
   Trigger  Trigger[]
+  image    String?
 }
 
 model Zap {

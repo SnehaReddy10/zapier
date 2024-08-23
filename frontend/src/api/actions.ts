@@ -13,3 +13,15 @@ export async function getAvailableActions() {
     return { success: false, error: err.response.data.error };
   }
 }
+
+export async function getAvailableEventsForActions(actionId: string) {
+  try {
+    const result = await axios.get(`${BACKEND_URL}/action/events/${actionId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN)}` },
+    });
+    return result.data;
+  } catch (err: any) {
+    console.log(err.response.data.error);
+    return { success: false, error: err.response.data.error };
+  }
+}

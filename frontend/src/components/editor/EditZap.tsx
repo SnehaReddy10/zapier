@@ -4,6 +4,9 @@ import { RxCross2 } from 'react-icons/rx';
 import SecondaryButton from '../buttons/SecondaryButton';
 import EventInput from '../EventInput';
 import { MdAccountCircle } from 'react-icons/md';
+import { useEffect, useState } from 'react';
+import { getAvailableEventsForActions } from '@/api/actions';
+import { getAvailableEventsForTrigger } from '@/api/triggers';
 
 const notionNavItems = [
   {
@@ -24,7 +27,27 @@ const notionNavItems = [
   },
 ];
 
-function EditZap() {
+function EditZap({
+  actionId,
+  triggerId,
+}: {
+  actionId?: string;
+  triggerId?: string;
+}) {
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (triggerId) {
+      getAvailableEventsForTrigger(triggerId).then((res) =>
+        setItems(res.availableEvents)
+      );
+    } else if (actionId) {
+      getAvailableEventsForActions(actionId).then((res) => {
+        setItems(res.availableEvents);
+      });
+    }
+  }, []);
+
   return (
     <div className="text-xxxs w-[30%] text-[#2d2e2e]">
       <div className="flex gap-2 items-center py-2 px-2 border-[#d7d5d2] border-b-[1px]">
@@ -49,7 +72,7 @@ function EditZap() {
       </div>
       <div className="flex flex-col justify-between h-[70%]">
         <div className="flex flex-col gap-1 shadow-lg shadow-gray-300 m-2 h-[90%]">
-          <EventInput items={[]} label={'Email'} required={true} />
+          <EventInput items={items} label={'Event'} required={true} />
           <p className="text-xxxxs">This is performed when the Zap runs.</p>
         </div>
         <div className="h-[10%]">

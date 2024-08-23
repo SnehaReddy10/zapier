@@ -89,7 +89,16 @@ export function Edit() {
         )}
       </div>
 
-      {(trigger || actions[currentIndex - 1].action) && <EditZap />}
+      {(trigger || actions[currentIndex - 1].action) && (
+        <EditZap
+          triggerId={trigger ? trigger.id : null}
+          actionId={
+            actions[currentIndex - 1].action
+              ? actions[currentIndex - 1].id
+              : null
+          }
+        />
+      )}
     </div>
   );
 }

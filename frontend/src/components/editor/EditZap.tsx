@@ -2,6 +2,8 @@ import { GoPencil } from 'react-icons/go';
 import { RiNotionLine } from 'react-icons/ri';
 import { RxCross2 } from 'react-icons/rx';
 import SecondaryButton from '../buttons/SecondaryButton';
+import EventInput from '../EventInput';
+import { MdAccountCircle } from 'react-icons/md';
 
 const notionNavItems = [
   {
@@ -44,6 +46,34 @@ function EditZap() {
           <span className="flex flex-1 font-bold">Notion</span>
           <SecondaryButton text="Change" />
         </div>
+      </div>
+      <div className="flex flex-col justify-between h-[70%]">
+        <div className="flex flex-col gap-1 shadow-lg shadow-gray-300 m-2 h-[90%]">
+          <EventInput items={[]} label={'Email'} required={true} />
+          <p className="text-xxxxs">This is performed when the Zap runs.</p>
+        </div>
+        <div className="h-[10%]">
+          <EditZapFooter eventSelected={false} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function EditZapFooter({ eventSelected }: { eventSelected: boolean }) {
+  return (
+    <div className="p-2">
+      <div className="flex justify-between items-center">
+        <button
+          className={`${
+            eventSelected ? '' : 'cursor-not-allowed'
+          } text-xxxs bg-gray-300 border-[1px] border-gray-400 p-1`}
+        >
+          {eventSelected ? '' : 'To continue, choose an event'}
+        </button>
+        <p className="bg-purple-700 rounded-full p-1">
+          <MdAccountCircle size={20} color="white" />
+        </p>
       </div>
     </div>
   );

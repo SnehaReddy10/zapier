@@ -20,7 +20,7 @@ function Zap({ zap }: { zap: ZapSchema }) {
   return (
     <tr
       className={`flex gap-4 items-center py-1 border-b-[2px] border-[#ece9df] ${
-        selected ? 'bg-[#f0f1fa]' : ''
+        selected ? 'bg-purple-100' : ''
       }`}
     >
       <td>

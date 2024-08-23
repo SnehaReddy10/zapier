@@ -19,6 +19,7 @@ model AvailableActions {
   metaData String
   Action   Action[]
   image    String?
+  events   Event[]
 }
 
 model AvailableTriggers {
@@ -27,6 +28,7 @@ model AvailableTriggers {
   metaData String
   Trigger  Trigger[]
   image    String?
+  events   Event[]
 }
 
 model Zap {
@@ -72,4 +74,13 @@ model zaps {
 model zapRun {
   zapId  String @unique
   userId String @unique
+}
+
+model Event {
+  id                  String             @id @default(uuid())
+  name                String
+  AvailableTrigger    AvailableTriggers? @relation(fields: [availableTriggersId], references: [id])
+  availableTriggersId String?
+  AvailableAction     AvailableActions?  @relation(fields: [availableActionsId], references: [id])
+  availableActionsId  String?
 }

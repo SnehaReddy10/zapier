@@ -17,3 +17,12 @@ actionRouter.get('/availableActions', async (req, res) => {
   const availableActions = await prismaClient.availableActions.findMany();
   return res.json({ success: true, availableActions });
 });
+
+actionRouter.get('/events/:actionId', async (req, res) => {
+  const actionId = req.params.actionId;
+
+  const availableEvents = await prismaClient.event.findMany({
+    where: { availableActionsId: actionId },
+  });
+  return res.json({ success: true, availableEvents });
+});

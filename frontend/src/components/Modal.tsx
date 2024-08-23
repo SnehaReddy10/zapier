@@ -1,4 +1,4 @@
-import { getAvailableActions } from '@/api/actions';
+import { getAvailableActions, getAvailableTriggers } from '@/api/actions';
 import { ZapCellType } from '@/types/Zap';
 import { useEffect, useState } from 'react';
 import Loader from './Loader';
@@ -24,13 +24,24 @@ function Modal({
 
   useEffect(() => {
     setLoading(true);
-    const result = getAvailableActions();
-    result.then((data: any) => {
-      if (data.success) {
-        setAvailableActions(data.availableActions);
-        setLoading(false);
-      }
-    });
+    let result;
+    if (type == ZapCellType.action) {
+      result = getAvailableActions();
+      result.then((data: any) => {
+        if (data.success) {
+          setAvailableActions(data.availableActions);
+          setLoading(false);
+        }
+      });
+    } else {
+      result = getAvailableTriggers();
+      result.then((data: any) => {
+        if (data.success) {
+          setAvailableTriggers(data.availableTriggers);
+          setLoading(false);
+        }
+      });
+    }
   }, []);
   return (
     <div className="bg-[#fffdf9] text-xxxs rounded-sm shadow-sm shadow-white w-1/3">
@@ -46,7 +57,7 @@ function Modal({
                 onClick={() => {
                   onSelect({ ...x, index });
                 }}
-                className="flex gap-2 items-center font-semibold py-2 my-2 bg-gray-50"
+                className="flex gap-2 items-center font-semibold py-2 my-2"
                 key={x.id}
               >
                 <img src={x.image} alt="" className="w-3 h-2" />
@@ -57,7 +68,16 @@ function Modal({
         )) ||
           (type == 0 &&
             availableTriggers.map((x: any) => (
-              <div key={x.id}>{x.action}</div>
+              <div
+                onClick={() => {
+                  onSelect({ ...x, index });
+                }}
+                className="flex gap-2 items-center font-semibold py-2 my-2"
+                key={x.id}
+              >
+                <img src={x.image} alt="" className="w-3 h-2" />
+                <p>{x.trigger}</p>
+              </div>
             )))}
       </div>
     </div>

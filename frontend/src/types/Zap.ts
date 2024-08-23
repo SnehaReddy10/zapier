@@ -23,7 +23,7 @@ export type Action = {
 };
 
 export type Trigger = {
-  name: string;
+  trigger: string;
   interval: string;
   description: string;
   event: string;

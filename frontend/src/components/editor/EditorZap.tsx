@@ -96,7 +96,7 @@ function EditorZap({
                   />
                   <p className="flex gap-1 items-center px-1 py-[2px] border-[#eaeae4] border-[1px]  cursor-pointer">
                     <RiNotionLine size={18} />
-                    <span>{trigger?.name ?? action?.action}</span>
+                    <span>{trigger?.trigger ?? action?.action}</span>
                   </p>
                   <p className="bg-[#f6ffdb] px-1 py-[2px] border-[1px] border-[#eaeae4] items-center rounded-sm flex gap-1 cursor-pointer">
                     <LuClock4 size={18} />

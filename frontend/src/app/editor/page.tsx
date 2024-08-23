@@ -45,6 +45,10 @@ export function Edit() {
     );
   };
 
+  const selectTrigger = (newTrigger: any) => {
+    setTrigger(() => newTrigger);
+  };
+
   return (
     <div className="w-full cursor-grab h-screen bg-[#f7f5f2] flex flex-col gap-1 items-center pt-10">
       <EditorZap
@@ -78,7 +82,9 @@ export function Edit() {
           <Modal
             index={currentIndex ?? 1}
             type={modalType}
-            onSelect={selectAction}
+            onSelect={
+              modalType == ZapCellType.action ? selectAction : selectTrigger
+            }
           />
         </div>
       )}

@@ -17,3 +17,12 @@ triggerRouter.get('/availableTriggers', async (req, res) => {
   const availableTriggers = await prismaClient.availableTriggers.findMany();
   return res.json({ success: true, availableTriggers });
 });
+
+triggerRouter.get('/events/:triggerId', async (req, res) => {
+  const triggerId = req.params.triggerId;
+
+  const availableEvents = await prismaClient.event.findMany({
+    where: { availableTriggersId: triggerId },
+  });
+  return res.json({ success: true, availableEvents });
+});

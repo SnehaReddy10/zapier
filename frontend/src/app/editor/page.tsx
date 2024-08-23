@@ -31,14 +31,12 @@ function Editor() {
 export function Edit() {
   const [trigger, setTrigger] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(1);
-  const [actions, setActions] = useState<any>([{ id: currentIndex }]);
+  const [actions, setActions] = useState<any>([{ index: currentIndex }]);
   const [modalType, setModalType] = useState<null | ZapCellType>(null);
 
-  const addAction = () => {
-    setActions((x: any) => [
-      ...x,
-      { index: currentIndex + 1, interval: '2 mins' },
-    ]);
+  const addAction = (index: number) => {
+    setCurrentIndex(index + 1);
+    setActions((x: any) => [...x, { index: index + 1, interval: '2 mins' }]);
   };
 
   const selectAction = (action: any) => {
@@ -78,7 +76,7 @@ export function Edit() {
           className="absolute inset-0 flex justify-center items-center z-10 w-full h-full bg-opacity-45 bg-[#555655]"
         >
           <Modal
-            index={currentIndex}
+            index={currentIndex ?? 1}
             type={modalType}
             onSelect={selectAction}
           />

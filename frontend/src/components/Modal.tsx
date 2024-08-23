@@ -44,7 +44,6 @@ function Modal({
             {availableActions.map((x: any) => (
               <div
                 onClick={() => {
-                  console.log(x);
                   onSelect({ ...x, index });
                 }}
                 className="flex gap-2 items-center font-semibold py-2 my-2 bg-gray-50"

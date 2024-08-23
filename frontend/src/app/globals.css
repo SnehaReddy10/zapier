@@ -2,17 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@layer base{
-  .text-xxs{
-    @apply text-[0.65rem]
+@layer base {
+  .text-xxs {
+    @apply text-[0.65rem];
   }
 
-  .text-xxxs{
-    @apply text-[0.55rem]
+  .text-xxxs {
+    @apply text-[0.55rem];
   }
 
-  body{
-    @apply bg-[#fffdf9]
+  .text-xxxxs {
+    @apply text-[0.45rem];
+  }
+
+  body {
+    @apply bg-[#fffdf9];
   }
 }

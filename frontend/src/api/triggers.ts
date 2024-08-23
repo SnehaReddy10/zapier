@@ -1,10 +1,10 @@
+import { TOKEN } from '@/constants';
 import axios from 'axios';
 import { BACKEND_URL } from '../../config';
-import { TOKEN } from '@/constants';
 
-export async function getAvailableActions() {
+export async function getAvailableTriggers() {
   try {
-    const result = await axios.get(`${BACKEND_URL}/action/availableActions`, {
+    const result = await axios.get(`${BACKEND_URL}/trigger/availableTriggers`, {
       headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN)}` },
     });
     return result.data;

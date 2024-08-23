@@ -1,4 +1,4 @@
-import { getAvailableActions, getAvailableTriggers } from '@/api/actions';
+import { getAvailableActions } from '@/api/actions';
 import { ZapCellType } from '@/types/Zap';
 import { useEffect, useState } from 'react';
 import Loader from './Loader';
@@ -8,6 +8,7 @@ import { FiTool } from 'react-icons/fi';
 import { HiOutlineSquaresPlus } from 'react-icons/hi2';
 import { LuZap } from 'react-icons/lu';
 import { VscSearch } from 'react-icons/vsc';
+import { getAvailableTriggers } from '@/api/triggers';
 
 function Modal({
   type,

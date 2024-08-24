@@ -38,6 +38,7 @@ export function Edit() {
   };
 
   const selectAction = (action: any) => {
+    setTrigger(null);
     setActions((x: any) =>
       x.map((x: any) => (x.index == action.index ? action : x))
     );
@@ -45,6 +46,22 @@ export function Edit() {
 
   const selectTrigger = (newTrigger: any) => {
     setTrigger(() => newTrigger);
+  };
+
+  const selectEvent = (e: any) => {
+    if (trigger) {
+      setTrigger({ ...trigger, event: e.name });
+    }
+    if (actions[currentIndex - 1].action) {
+      setActions((x: any) =>
+        x.map((action: any, index: number) => {
+          if (index == currentIndex - 1) {
+            return { ...action, event: e.name };
+          }
+          return action;
+        })
+      );
+    }
   };
 
   return (
@@ -91,6 +108,7 @@ export function Edit() {
 
       {(trigger || actions[currentIndex - 1].action) && (
         <EditZap
+          onEventSelect={selectEvent}
           triggerId={trigger ? trigger.id : null}
           actionId={
             actions[currentIndex - 1].action

@@ -30,11 +30,15 @@ const notionNavItems = [
 function EditZap({
   actionId,
   triggerId,
+  onEventSelect,
 }: {
   actionId?: string;
   triggerId?: string;
+  onEventSelect: (e: any) => void;
 }) {
   const [items, setItems] = useState<any[]>([]);
+  const [currentEvent, setCurrentEvent] = useState(null);
+  const [showEditZap, setShowEditZap] = useState(true);
 
   useEffect(() => {
     if (triggerId) {
@@ -46,40 +50,59 @@ function EditZap({
         setItems(res.availableEvents);
       });
     }
-  }, []);
+  }, [triggerId, actionId]);
 
   return (
-    <div className="text-xxxs w-[30%] text-[#2d2e2e]">
-      <div className="flex gap-2 items-center py-2 px-2 border-[#d7d5d2] border-b-[1px]">
-        <p className="p-[2px] border-[1px] border-[#d7d3c9]">
-          <RiNotionLine size={18} />
-        </p>
-        <p className="flex flex-1 font-bold cursor-pointer">1. Updated Page</p>
-        <GoPencil size={12} className="cursor-pointer m-[1px]" />
-        <RxCross2 size={14} className="cursor-pointer m-[1px]" />
-      </div>
-      <div className="flex gap-2 justify-around px-2 py-2 border-[#d7d5d2] border-b-[1px]">
-        {notionNavItems.map((x) => (
-          <div key={x.id}>{x.title}</div>
-        ))}
-      </div>
-      <div className="flex flex-col gap-2 m-2 border-[#d7d5d2] border-b-[1px]">
-        <div className="flex gap-2 items-center m-1 rounded-sm px-1 py-1 border-[#eaeae4] border-[1px]  cursor-pointer">
-          <RiNotionLine size={18} />
-          <span className="flex flex-1 font-bold">Notion</span>
-          <SecondaryButton text="Change" />
+    <>
+      {showEditZap && (
+        <div className="text-xxxs w-[30%] text-[#2d2e2e]">
+          <div className="flex gap-2 items-center py-2 px-2 border-[#d7d5d2] border-b-[1px]">
+            <p className="p-[2px] border-[1px] border-[#d7d3c9]">
+              <RiNotionLine size={18} />
+            </p>
+            <p className="flex flex-1 font-bold cursor-pointer">
+              1. Updated Page
+            </p>
+            <GoPencil size={12} className="cursor-pointer m-[1px]" />
+            <RxCross2
+              size={14}
+              className="cursor-pointer m-[1px]"
+              onClick={() => setShowEditZap(false)}
+            />
+          </div>
+          <div className="flex gap-2 justify-around px-2 py-2 border-[#d7d5d2] border-b-[1px]">
+            {notionNavItems.map((x) => (
+              <div key={x.id}>{x.title}</div>
+            ))}
+          </div>
+          <div className="flex flex-col gap-2 m-2 border-[#d7d5d2] border-b-[1px]">
+            <div className="flex gap-2 items-center m-1 rounded-sm px-1 py-1 border-[#eaeae4] border-[1px]  cursor-pointer">
+              <RiNotionLine size={18} />
+              <span className="flex flex-1 font-bold">Notion</span>
+              <SecondaryButton text="Change" />
+            </div>
+          </div>
+          <div className="flex flex-col justify-between h-[70%]">
+            <div className="flex flex-col gap-1 shadow-lg shadow-gray-300 m-2 h-[90%]">
+              <EventInput
+                selectedItem={currentEvent}
+                onSelect={(e: any) => {
+                  setCurrentEvent(e);
+                  onEventSelect(e);
+                }}
+                items={items}
+                label={'Event'}
+                required={true}
+              />
+              <p className="text-xxxxs">This is performed when the Zap runs.</p>
+            </div>
+            <div className="h-[10%]">
+              <EditZapFooter eventSelected={false} />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col justify-between h-[70%]">
-        <div className="flex flex-col gap-1 shadow-lg shadow-gray-300 m-2 h-[90%]">
-          <EventInput items={items} label={'Event'} required={true} />
-          <p className="text-xxxxs">This is performed when the Zap runs.</p>
-        </div>
-        <div className="h-[10%]">
-          <EditZapFooter eventSelected={false} />
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

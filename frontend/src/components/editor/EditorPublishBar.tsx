@@ -1,4 +1,10 @@
-export function EditorPublishBar({ canPublish }: { canPublish: boolean }) {
+export function EditorPublishBar({
+  canPublish,
+  setPublish,
+}: {
+  canPublish: boolean;
+  setPublish: (publish: boolean) => void;
+}) {
   return (
     <div className="flex flex-1 rounded-ss-xl justify-between items-center h-max px-2 py-1 text-xxxs bg-white border-b-[1px] border-gray-300">
       <div className="relative cursor-not-allowed">
@@ -6,6 +12,7 @@ export function EditorPublishBar({ canPublish }: { canPublish: boolean }) {
         <div className="absolute inset-0 top-[2px] left-[2px] bg-gray-300 rounded-full w-[14px] h-[14px]"></div>
       </div>
       <div
+        onClick={() => setPublish(true)}
         className={`${
           canPublish
             ? 'bg-purple-700 cursor-pointer'

@@ -8,9 +8,11 @@ import { useEffect, useState } from 'react';
 import { ZapCellType } from '@/types/Zap';
 import Modal from '@/components/Modal';
 import EditZap from '@/components/editor/EditZap';
+import { createZap } from '@/api/zaps';
 
 function Editor() {
   const [canPublish, setCanPublish] = useState(false);
+  const [publish, setPublish] = useState(false);
 
   return (
     <div className={`relative h-screen overflow-hidden`}>
@@ -18,15 +20,15 @@ function Editor() {
       <div className="flex min-h-screen">
         <EditorSideBar />
         <div className="w-full">
-          <EditorPublishBar canPublish={canPublish} />
-          <Edit setCanPublish={setCanPublish} />
+          <EditorPublishBar canPublish={canPublish} setPublish={setPublish} />
+          <Edit setCanPublish={setCanPublish} publish={publish} />
         </div>
       </div>
     </div>
   );
 }
 
-export function Edit({ setCanPublish }: any) {
+export function Edit({ setCanPublish, publish }: any) {
   const [trigger, setTrigger] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [actions, setActions] = useState<any>([{ index: currentIndex + 1 }]);
@@ -42,7 +44,11 @@ export function Edit({ setCanPublish }: any) {
     } else {
       setCanPublish(false);
     }
-  }, [trigger, actions]);
+
+    if (publish) {
+      createZap({ actions, trigger });
+    }
+  }, [trigger, actions, publish]);
 
   const addAction = (index: number) => {
     setCurrentIndex(index + 1);

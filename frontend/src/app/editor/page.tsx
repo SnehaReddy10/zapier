@@ -13,7 +13,7 @@ function Editor() {
   return (
     <div className={`relative h-screen overflow-hidden`}>
       <EditorAppbar />
-      <div className="flex">
+      <div className="flex min-h-screen">
         <EditorSideBar />
         <div className="w-full">
           <EditorPublishBar />
@@ -27,34 +27,33 @@ function Editor() {
 export function Edit() {
   const [trigger, setTrigger] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(1);
-  const [actions, setActions] = useState<any>([{ index: currentIndex }]);
+  const [actions, setActions] = useState<any>([{ index: currentIndex + 1 }]);
   const [modalType, setModalType] = useState<null | ZapCellType>(null);
+  const [showEditZap, setShowEditZap] = useState(false);
 
   const addAction = (index: number) => {
     setCurrentIndex(index + 1);
     setActions((x: any) => [...x, { index: index + 1, interval: '2 mins' }]);
   };
 
-  const selectAction = (action: any) => {
-    setTrigger(null);
-    setActions((x: any) =>
-      x.map((x: any) => (x.index == action.index ? action : x))
-    );
-  };
-
-  const selectTrigger = (newTrigger: any) => {
-    setTrigger(() => newTrigger);
-  };
-
-  const selectEvent = (e: any) => {
-    if (trigger) {
-      setTrigger({ ...trigger, event: e.name });
+  const selectZap = (zap: any, zapType: ZapCellType) => {
+    if (zapType == ZapCellType.trigger) {
+      setTrigger(() => zap);
+    } else if (zapType == ZapCellType.action) {
+      setActions((x: any) =>
+        x.map((x: any) => (x.index == zap.index ? zap : x))
+      );
     }
-    if (actions[currentIndex - 1].action) {
+  };
+
+  const selectEvent = (event: string, zapType?: ZapCellType) => {
+    if (zapType == ZapCellType.trigger) {
+      setTrigger({ ...trigger, event });
+    } else if (zapType == ZapCellType.action) {
       setActions((x: any) =>
         x.map((action: any, index: number) => {
-          if (index == currentIndex - 1) {
-            return { ...action, event: e.name };
+          if (action.index == currentIndex) {
+            return { ...action, event };
           }
           return action;
         })
@@ -63,24 +62,32 @@ export function Edit() {
   };
 
   return (
-    <div className="flex flex-grow">
-      <div className="w-full max-h-screen scroll-smooth overflow-y-scroll no-scrollbar cursor-grab bg-gray-50 flex flex-col gap-1 items-center pt-10">
+    <div className="flex flex-grow max-h-screen">
+      <div className="w-full min-h-screen scroll-smooth overflow-y-scroll py-14 no-scrollbar cursor-grab bg-gray-50 flex flex-col gap-1 items-center pt-10">
         <EditorZap
           trigger={trigger}
           addAction={addAction}
           type={ZapCellType.trigger}
           index={1}
           onClick={(e) => {
+            if (trigger) {
+              setShowEditZap(true);
+            } else {
+              setModalType(e);
+            }
             setCurrentIndex(1);
-            setModalType(e);
           }}
         />
         {actions.map((x: any, index: number) => (
           <EditorZap
             key={x.id}
             onClick={(e) => {
+              if (x.action) {
+                setShowEditZap(true);
+              } else {
+                setModalType(e);
+              }
               setCurrentIndex(x.index);
-              setModalType(e);
             }}
             action={x}
             type={ZapCellType.action}
@@ -96,22 +103,21 @@ export function Edit() {
             <Modal
               index={currentIndex ?? 1}
               type={modalType}
-              onSelect={
-                modalType == ZapCellType.action ? selectAction : selectTrigger
-              }
+              onSelect={selectZap}
             />
           </div>
         )}
       </div>
 
-      {(trigger || actions[currentIndex - 1].action) && (
+      {showEditZap && (
         <EditZap
+          setShowEditZap={setShowEditZap}
+          zapType={currentIndex == 1 ? ZapCellType.trigger : ZapCellType.action}
           onEventSelect={selectEvent}
-          triggerId={trigger ? trigger.id : null}
-          actionId={
-            actions[currentIndex - 1].action
-              ? actions[currentIndex - 1].id
-              : null
+          id={
+            currentIndex == 1
+              ? trigger?.id
+              : actions.find((x: any) => x.index == currentIndex)?.id
           }
         />
       )}

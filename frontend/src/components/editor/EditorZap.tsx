@@ -120,7 +120,7 @@ function EditorZap({
         <div className="bg-gradient-to-t from-[#5140bf] via-[#5140bf] to-white h-6 w-[2px]"></div>
         <AddButton
           onClick={() => {
-            addAction(index);
+            addAction(index + 1);
           }}
         />
       </div>

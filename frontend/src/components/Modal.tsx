@@ -16,7 +16,7 @@ function Modal({
   index,
 }: {
   type: ZapCellType;
-  onSelect: (e: any) => void;
+  onSelect: (e: any, zapType: ZapCellType) => void;
   index: number;
 }) {
   const [availableActions, setAvailableActions] = useState<any>([]);
@@ -56,7 +56,7 @@ function Modal({
             {availableActions.map((x: any) => (
               <div
                 onClick={() => {
-                  onSelect({ ...x, index });
+                  onSelect({ ...x, index }, type);
                 }}
                 className="flex gap-2 items-center font-semibold py-2 my-2"
                 key={x.id}
@@ -71,7 +71,7 @@ function Modal({
             availableTriggers.map((x: any) => (
               <div
                 onClick={() => {
-                  onSelect({ ...x, index });
+                  onSelect({ ...x, index }, type);
                 }}
                 className="flex gap-2 items-center font-semibold py-2 my-2"
                 key={x.id}

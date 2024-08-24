@@ -65,7 +65,7 @@ function EditorZap({
               </div>
               <p>
                 {index}.
-                <span className="text-[#9a9793]">
+                <span className="text-gray-800">
                   {type == ZapCellType.action
                     ? 'Select the event for your Zap to run'
                     : 'Select the event that runs your Zap'}

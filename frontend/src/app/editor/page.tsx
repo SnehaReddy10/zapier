@@ -11,15 +11,13 @@ import EditZap from '@/components/editor/EditZap';
 
 function Editor() {
   return (
-    <div className={`relative h-screen flex justify-center items-center`}>
-      <div className={`w-full h-full`}>
-        <EditorAppbar />
-        <div className="flex">
-          <EditorSideBar />
-          <div className="w-full">
-            <EditorPublishBar />
-            <Edit />
-          </div>
+    <div className={`relative h-screen`}>
+      <EditorAppbar />
+      <div className="flex">
+        <EditorSideBar />
+        <div className="w-full">
+          <EditorPublishBar />
+          <Edit />
         </div>
       </div>
     </div>
@@ -65,8 +63,8 @@ export function Edit() {
   };
 
   return (
-    <div className="flex">
-      <div className="w-full cursor-grab h-screen bg-[#f7f5f2] flex flex-col gap-1 items-center pt-10">
+    <div className="flex flex-grow">
+      <div className="w-full max-h-screen scroll-smooth overflow-y-scroll no-scrollbar cursor-grab bg-[#f7f5f2] flex flex-col gap-1 items-center pt-10">
         <EditorZap
           trigger={trigger}
           addAction={addAction}

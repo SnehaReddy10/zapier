@@ -7,7 +7,7 @@ import { RiTv2Line } from 'react-icons/ri';
 
 export function EditorSideBar() {
   return (
-    <div className="flex flex-col gap-3 pt-1 px-[8px] bg-[#2d2e2e]">
+    <div className="flex flex-col items-stretch gap-3 pt-1 px-[8px] bg-[#2d2e2e]">
       <PiCirclesFour color="#95928e" size={18} />
       <LuFileSearch2 color="#95928e" size={18} />
       <FaRegCalendarAlt color="#95928e" size={18} />

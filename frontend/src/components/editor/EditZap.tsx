@@ -55,8 +55,8 @@ function EditZap({
   return (
     <>
       {showEditZap && (
-        <div className="text-xxxs w-[30%] text-[#2d2e2e]">
-          <div className="flex gap-2 items-center py-2 px-2 border-[#d7d5d2] border-b-[1px]">
+        <div className="text-xxxs w-[30%] max-w-2xl text-[#2d2e2e] flex flex-col h-screen">
+          <div className="h-8 flex gap-2 items-center py-2 px-2 border-gray-1000 border-b-[1px]">
             <p className="p-[2px] border-[1px] border-[#d7d3c9]">
               <RiNotionLine size={18} />
             </p>
@@ -70,20 +70,20 @@ function EditZap({
               onClick={() => setShowEditZap(false)}
             />
           </div>
-          <div className="flex gap-2 justify-around px-2 py-2 border-[#d7d5d2] border-b-[1px]">
+          <div className="h-8 flex gap-2 justify-around px-2 py-2 border-gray-1000 border-b-[1px]">
             {notionNavItems.map((x) => (
               <div key={x.id}>{x.title}</div>
             ))}
           </div>
-          <div className="flex flex-col gap-2 m-2 border-[#d7d5d2] border-b-[1px]">
+          <div className="h-10 flex flex-col gap-2 m-2 border-gray-1000 border-b-[1px]">
             <div className="flex gap-2 items-center m-1 rounded-sm px-1 py-1 border-[#eaeae4] border-[1px]  cursor-pointer">
               <RiNotionLine size={18} />
               <span className="flex flex-1 font-bold">Notion</span>
               <SecondaryButton text="Change" />
             </div>
           </div>
-          <div className="flex flex-col justify-between h-[70%]">
-            <div className="flex flex-col gap-1 shadow-lg shadow-gray-300 m-2 h-[90%]">
+          <div className="flex flex-col flex-grow justify-between">
+            <div className="flex flex-col flex-grow gap-1 shadow-lg shadow-gray-300 m-2">
               <EventInput
                 selectedItem={currentEvent}
                 onSelect={(e: any) => {
@@ -96,7 +96,7 @@ function EditZap({
               />
               <p className="text-xxxxs">This is performed when the Zap runs.</p>
             </div>
-            <div className="h-[10%]">
+            <div className="mb-14">
               <EditZapFooter eventSelected={false} />
             </div>
           </div>
@@ -108,19 +108,17 @@ function EditZap({
 
 export function EditZapFooter({ eventSelected }: { eventSelected: boolean }) {
   return (
-    <div className="p-2">
-      <div className="flex justify-between items-center">
-        <button
-          className={`${
-            eventSelected ? '' : 'cursor-not-allowed'
-          } text-xxxs bg-gray-300 border-[1px] border-gray-400 p-1`}
-        >
-          {eventSelected ? '' : 'To continue, choose an event'}
-        </button>
-        <p className="bg-purple-700 rounded-full p-1">
-          <MdAccountCircle size={20} color="white" />
-        </p>
-      </div>
+    <div className="flex justify-between items-center p-2">
+      <button
+        className={`${
+          eventSelected ? '' : 'cursor-not-allowed text-brown-200 bg-gray-50'
+        } text-xxxs border-[1px] border-gray-1000 p-1`}
+      >
+        {eventSelected ? '' : 'To continue, choose an event'}
+      </button>
+      <p className="bg-purple-700 rounded-full p-1">
+        <MdAccountCircle size={20} color="white" />
+      </p>
     </div>
   );
 }

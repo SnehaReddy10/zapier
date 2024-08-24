@@ -11,7 +11,7 @@ import EditZap from '@/components/editor/EditZap';
 
 function Editor() {
   return (
-    <div className={`relative h-screen`}>
+    <div className={`relative h-screen overflow-hidden`}>
       <EditorAppbar />
       <div className="flex">
         <EditorSideBar />
@@ -64,7 +64,7 @@ export function Edit() {
 
   return (
     <div className="flex flex-grow">
-      <div className="w-full max-h-screen scroll-smooth overflow-y-scroll no-scrollbar cursor-grab bg-[#f7f5f2] flex flex-col gap-1 items-center pt-10">
+      <div className="w-full max-h-screen scroll-smooth overflow-y-scroll no-scrollbar cursor-grab bg-gray-50 flex flex-col gap-1 items-center pt-10">
         <EditorZap
           trigger={trigger}
           addAction={addAction}

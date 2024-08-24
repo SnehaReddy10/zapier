@@ -15,14 +15,19 @@ const config: Config = {
       },
       colors: {
         gray: {
+          50: '#f7f5f2',
           100: '#e6e2db',
           300: '#f5f3eb',
           800: '#9a9793',
+          1000: '#d7d5d2',
         },
         purple: {
           100: '#f0f1fa',
           700: '#695be8',
           800: '#503ebd',
+        },
+        brown: {
+          200: '#afa5a0',
         },
       },
     },

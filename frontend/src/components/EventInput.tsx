@@ -24,7 +24,7 @@ function EventInput({
         {required && '(required)'}
       </p>
       <div className="relative flex gap-1 items-center h-6 border-[1px] border-gray-400 rounded-sm hover:border-purple-700">
-        {!selectedItem && <VscSearch size={20} className="z-10" />}
+        {!selectedItem && <VscSearch size={20} className="z-10 mx-1" />}
         <input
           onClick={(e: any) => {
             e.preventDefault();
@@ -33,7 +33,7 @@ function EventInput({
           value={selectedItem?.name ?? ''}
           type="text"
           placeholder="Choose an event"
-          className="absolute px-4 p-1 w-full appearance-none active:border-none select-none"
+          className="absolute px-6 p-1 w-full appearance-none active:border-none select-none"
         />
         {showEvents && (
           <div className="absolute overflow-y-scroll max-h-40 top-[42px] bg-[#fffdf9] py-2 px-1 shadow-lg shadow-gray-100 w-full">

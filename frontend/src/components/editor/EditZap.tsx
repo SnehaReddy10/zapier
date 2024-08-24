@@ -53,6 +53,7 @@ function EditZap({
         setItems(res.availableEvents);
       });
     }
+    return () => setCurrentEvent(null);
   }, [id]);
 
   return (

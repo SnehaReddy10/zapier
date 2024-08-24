@@ -19,3 +19,9 @@
     @apply bg-[#fffdf9];
   }
 }
+
+@layer utilities{
+  .no-scrollbar::-webkit-scrollbar{
+    display: none;
+  }
+}

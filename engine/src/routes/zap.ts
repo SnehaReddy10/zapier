@@ -41,6 +41,25 @@ zapRouter.post('', async (req, res) => {
   }
 });
 
+zapRouter.get('', authMiddleware, async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const zap = await prismaClient.zap.findMany({
+      where: { userId: userId },
+      select: {
+        actions: { select: { action: true } },
+        trigger: { select: { trigger: true } },
+      },
+    });
+
+    res.json({ success: true, zap });
+  } catch (err) {
+    console.log('Get All User Zaps Failed', err);
+    return res.json({ success: false, message: GENERIC.ServiceUnavailable });
+  }
+});
+
 zapRouter.get('/:zapId', authMiddleware, async (req, res) => {
   try {
     const zapId = req.params.zapId;

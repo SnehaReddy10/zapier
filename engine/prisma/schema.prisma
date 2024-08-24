@@ -54,7 +54,8 @@ model Action {
   availableActionId String
   zap               Zap?             @relation(fields: [zapId], references: [id])
   zapId             String?
-  event             String?
+  event             Event?           @relation(fields: [eventId], references: [id])
+  eventId           String?
 }
 
 model Trigger {
@@ -63,7 +64,8 @@ model Trigger {
   availableTriggerId String
   zap                Zap?              @relation(fields: [zapId], references: [id])
   zapId              String            @unique
-  event              String?
+  event              Event?            @relation(fields: [eventId], references: [id])
+  eventId            String?
 }
 
 model zaps {
@@ -83,4 +85,6 @@ model Event {
   availableTriggersId String?
   AvailableAction     AvailableActions?  @relation(fields: [availableActionsId], references: [id])
   availableActionsId  String?
+  Action              Action[]
+  Trigger             Trigger[]
 }

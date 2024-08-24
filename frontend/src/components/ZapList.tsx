@@ -5,9 +5,10 @@ import TertiaryButton from './buttons/TertiaryButton';
 import Zap from './Zap';
 import SearchBar from './SearchBar';
 import { ActionType } from '@/types/Zap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CiFolderOn } from 'react-icons/ci';
 import { GoZap } from 'react-icons/go';
+import { getAllZaps } from '@/api/zaps';
 
 const zaps = [
   {
@@ -27,6 +28,16 @@ const zaps = [
 ];
 
 function ZapList() {
+  const [zaps, setZaps] = useState<any[]>([]);
+
+  useEffect(() => {
+    getAllZaps().then((res: any) => {
+      if (res.success) {
+        setZaps(res.zaps);
+      }
+    });
+  }, []);
+
   const [showCreateDropDown, setShowCreateDropdown] = useState(false);
   return (
     <div className="text-[#2e2f2f] p-3 text-xxs w-full border-l-[1px] border-t-[1px] border-[#ebe8e1]">

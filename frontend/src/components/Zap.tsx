@@ -14,8 +14,8 @@ function Zap({ zap }: { zap: ZapSchema }) {
   const router = useRouter();
 
   const currentTime = new Date();
-  const mins = currentTime.getMinutes() - zap.lastEdit.getMinutes();
-  const hours = currentTime.getHours() - zap.lastEdit.getHours();
+  const mins = currentTime.getMinutes() - zap.lastEdit?.getMinutes();
+  const hours = currentTime.getHours() - zap.lastEdit?.getHours();
 
   return (
     <tr
@@ -49,27 +49,23 @@ function Zap({ zap }: { zap: ZapSchema }) {
       </td>
       <td>
         <div className="flex">
-          {zap.actions.map((x) => (
-            <div key={x} className="flex">
-              {x == ActionType.NOTION && (
-                <p className="p-1 border-[1px] border-[#d7d3c9]">
-                  <RiNotionLine />
-                </p>
-              )}
-              {x == ActionType.GMAIL && (
-                <p className="p-1 border-[1px] border-[#d7d3c9]">
-                  <BiLogoGmail />
-                </p>
-              )}
-            </div>
-          ))}
+          <div className="flex gap-1">
+            {zap.actions.map((x) => (
+              <img
+                key={x.action.id}
+                src={x.action.image}
+                alt=""
+                className="w-4 h-3"
+              />
+            ))}
+          </div>
         </div>
       </td>
       <td
         onClick={() => router.push('/editor')}
         className="flex flex-1 font-semibold hover:underline hover:text-[#503ebd] capitalize hover:cursor-pointer"
       >
-        {zap.title}
+        {zap.title ?? 'Untitled'}
       </td>
       {mins < 1 && <td>Just now</td>}
       {mins > 1 && mins < 59 && <td>{mins}m ago</td>}

@@ -1,6 +1,6 @@
 export type Zap = {
   title: string;
-  actions: ActionType[];
+  actions: any[];
   lastEdit: Date;
   running: boolean;
 };

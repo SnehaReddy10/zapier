@@ -3,6 +3,18 @@ import { BACKEND_URL } from '../../config';
 import { TOKEN } from '@/constants';
 import { CreateZapMapper } from '@/mapper/create-zap.mapper';
 
+export async function getAllZaps() {
+  try {
+    const result = await axios.get(`${BACKEND_URL}/zap`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN)}` },
+    });
+    return result.data;
+  } catch (err: any) {
+    console.log(err.response.data.error);
+    return { success: false, error: err.response.data.error };
+  }
+}
+
 export async function createZap({ actions, trigger }: any) {
   try {
     const zapRequest = CreateZapMapper({ actions, trigger });

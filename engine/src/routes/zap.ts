@@ -45,7 +45,7 @@ zapRouter.get('', authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
 
-    const zap = await prismaClient.zap.findMany({
+    const zaps = await prismaClient.zap.findMany({
       where: { userId: userId },
       select: {
         actions: { select: { action: true } },
@@ -53,7 +53,7 @@ zapRouter.get('', authMiddleware, async (req, res) => {
       },
     });
 
-    res.json({ success: true, zap });
+    res.json({ success: true, zaps });
   } catch (err) {
     console.log('Get All User Zaps Failed', err);
     return res.json({ success: false, message: GENERIC.ServiceUnavailable });

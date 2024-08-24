@@ -49,7 +49,7 @@ function EditorZap({
             }}
           >
             <RxDragHandleDots2
-              color={`${showMoveIcon ? 'gray' : 'gray-50'}`}
+              color={`${showMoveIcon ? 'gray' : '#f7f5f2'}`}
               className="cursor-pointer"
             />
             <div className="flex cursor-pointer border-[#2d2e2e] hover:border-[#5949c1] border-dotted active:border-[#5949c1] border-[1px] transition-all ease-linear h-max flex-col rounded-md bg-white shadow-lg text-[#3b3c3c] shadow-gray-200 gap-2 text-xxxs py-2 w-56 px-2 font-semibold">
@@ -83,7 +83,7 @@ function EditorZap({
             }}
           >
             <RxDragHandleDots2
-              color={`${showMoveIcon ? 'gray' : 'gray-50'}`}
+              color={`${showMoveIcon ? 'gray' : '#f7f5f2'}`}
               className="cursor-pointer"
             />
             <div className="flex cursor-pointer hover:border-[#5949c1] active:border-[#5949c1] border-[1px] transition-all ease-linear h-max flex-col rounded-md bg-white shadow-lg text-[#3b3c3c] shadow-gray-200 gap-2 text-xxxs py-2 w-56 px-2 font-semibold">

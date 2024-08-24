@@ -19,12 +19,14 @@ export type Action = {
   action: string;
   interval: string;
   description: string;
-  event: string;
+  eventId: string;
+  eventName: string;
 };
 
 export type Trigger = {
   trigger: string;
   interval: string;
   description: string;
-  event: string;
+  eventId: string;
+  eventName: string;
 };

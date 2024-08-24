@@ -109,7 +109,7 @@ function EditorZap({
               </div>
               <div className="flex gap-2">
                 {index}.
-                {trigger?.event ?? action?.event ?? (
+                {trigger?.eventName ?? action?.eventName ?? (
                   <p className="text-gray-400">Select the event</p>
                 )}
               </div>

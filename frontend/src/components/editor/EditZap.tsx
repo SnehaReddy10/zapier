@@ -88,7 +88,7 @@ function EditZap({
             selectedItem={currentEvent}
             onSelect={(e: any) => {
               setCurrentEvent(e);
-              onEventSelect(e.name, zapType);
+              onEventSelect(e, zapType);
             }}
             items={items}
             label={'Event'}

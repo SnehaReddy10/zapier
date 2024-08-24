@@ -4,32 +4,45 @@ import { EditorAppbar } from '@/components/editor/EditorAppBar';
 import { EditorPublishBar } from '@/components/editor/EditorPublishBar';
 import { EditorSideBar } from '@/components/editor/EditorSideBar';
 import EditorZap from '@/components/editor/EditorZap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ZapCellType } from '@/types/Zap';
 import Modal from '@/components/Modal';
 import EditZap from '@/components/editor/EditZap';
 
 function Editor() {
+  const [canPublish, setCanPublish] = useState(false);
+
   return (
     <div className={`relative h-screen overflow-hidden`}>
       <EditorAppbar />
       <div className="flex min-h-screen">
         <EditorSideBar />
         <div className="w-full">
-          <EditorPublishBar />
-          <Edit />
+          <EditorPublishBar canPublish={canPublish} />
+          <Edit setCanPublish={setCanPublish} />
         </div>
       </div>
     </div>
   );
 }
 
-export function Edit() {
+export function Edit({ setCanPublish }: any) {
   const [trigger, setTrigger] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [actions, setActions] = useState<any>([{ index: currentIndex + 1 }]);
   const [modalType, setModalType] = useState<null | ZapCellType>(null);
   const [showEditZap, setShowEditZap] = useState(false);
+
+  useEffect(() => {
+    if (
+      trigger?.eventId &&
+      actions.every((x: any) => typeof x.eventId != typeof undefined)
+    ) {
+      setCanPublish(true);
+    } else {
+      setCanPublish(false);
+    }
+  }, [trigger, actions]);
 
   const addAction = (index: number) => {
     setCurrentIndex(index + 1);
@@ -46,14 +59,14 @@ export function Edit() {
     }
   };
 
-  const selectEvent = (event: string, zapType?: ZapCellType) => {
+  const selectEvent = (event: any, zapType?: ZapCellType) => {
     if (zapType == ZapCellType.trigger) {
-      setTrigger({ ...trigger, event });
+      setTrigger({ ...trigger, eventName: event.name, eventId: event.id });
     } else if (zapType == ZapCellType.action) {
       setActions((x: any) =>
         x.map((action: any, index: number) => {
           if (action.index == currentIndex) {
-            return { ...action, event };
+            return { ...action, eventName: event.name, eventId: event.id };
           }
           return action;
         })

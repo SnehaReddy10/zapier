@@ -29,32 +29,35 @@ const notionNavItems = [
 ];
 
 function EditZap({
-  id,
+  zap,
   zapType,
   onEventSelect,
   setShowEditZap,
+  setShowModal,
 }: {
-  id: string;
+  zap: any;
   zapType: ZapCellType;
   onEventSelect: (event: string, zapType: ZapCellType) => void;
   setShowEditZap: (show: boolean) => void;
+  setShowModal: (show: ZapCellType) => void;
 }) {
   const [items, setItems] = useState<any[]>([]);
   const [currentEvent, setCurrentEvent] = useState(null);
-  console.log({ id });
+  console.log({ zap });
 
   useEffect(() => {
     if (zapType == ZapCellType.trigger) {
-      getAvailableEventsForTrigger(id).then((res) =>
+      getAvailableEventsForTrigger(zap.id).then((res) =>
         setItems(res.availableEvents)
       );
     } else if (zapType == ZapCellType.action) {
-      getAvailableEventsForActions(id).then((res) => {
+      getAvailableEventsForActions(zap.id).then((res) => {
         setItems(res.availableEvents);
       });
     }
+
     return () => setCurrentEvent(null);
-  }, [id]);
+  }, [zap.id]);
 
   return (
     <div className="text-xxxs w-[30%] max-w-2xl text-[#2d2e2e] flex flex-col h-screen">
@@ -75,15 +78,78 @@ function EditZap({
           <div key={x.id}>{x.title}</div>
         ))}
       </div>
-      <div className="h-10 flex flex-col gap-2 m-2 border-gray-1000 border-b-[1px]">
-        <div className="flex gap-2 items-center m-1 rounded-sm px-1 py-1 border-[#eaeae4] border-[1px]  cursor-pointer">
-          <RiNotionLine size={18} />
-          <span className="flex flex-1 font-bold">Notion</span>
-          <SecondaryButton text="Change" />
-        </div>
+
+      {1 && (
+        <ChooseEvent
+          currentEvent={currentEvent}
+          zap={zap}
+          zapType={zapType}
+          items={items}
+          onEventSelect={onEventSelect}
+          setShowModal={setShowModal}
+          setCurrentEvent={setCurrentEvent}
+        />
+      )}
+
+      <div className="mb-14">
+        <EditZapFooter eventSelected={currentEvent == null ? false : true} />
+      </div>
+    </div>
+  );
+}
+
+export function EditZapFooter({ eventSelected }: { eventSelected: boolean }) {
+  return (
+    <div className="flex justify-between items-center p-2">
+      <button
+        className={`${
+          eventSelected
+            ? 'bg-blue-500 text-white cursor-pointer px-2 font-semibold'
+            : 'cursor-not-allowed text-brown-200 bg-gray-50'
+        } text-xxxs border-[1px] border-gray-1000 p-1 rounded-sm`}
+      >
+        {eventSelected ? 'Continue' : 'To continue, choose an event'}
+      </button>
+      <p className="bg-blue-500 rounded-full p-1">
+        <MdAccountCircle size={20} color="white" />
+      </p>
+    </div>
+  );
+}
+
+export function ChooseEvent({
+  zap,
+  setShowModal,
+  zapType,
+  currentEvent,
+  setCurrentEvent,
+  onEventSelect,
+  items,
+}: {
+  zap: any;
+  zapType: ZapCellType;
+  currentEvent: any;
+  items: any;
+  onEventSelect: (event: string, zapType: ZapCellType) => void;
+  setCurrentEvent: (event: any) => void;
+  setShowModal: (show: ZapCellType) => void;
+}) {
+  return (
+    <div className="flex flex-col flex-grow shadow-lg shadow-gray-200">
+      <div className="h-8 flex gap-2 m-2 border-gray-1000 border-b-[1px] items-center rounded-sm px-2 py-1 border-[1px]  cursor-pointer">
+        <img src={zap.image} alt="" className="w-4 h-3" />
+        <span className="flex flex-1 font-bold">
+          {zap.trigger ?? zap.action}
+        </span>
+        <SecondaryButton
+          text="Change"
+          onClick={() => {
+            setShowModal(zapType);
+          }}
+        />
       </div>
       <div className="flex flex-col flex-grow justify-between">
-        <div className="flex flex-col flex-grow gap-1 shadow-lg shadow-gray-300 m-2">
+        <div className="flex flex-col flex-grow gap-1 m-2">
           <EventInput
             selectedItem={currentEvent}
             onSelect={(e: any) => {
@@ -96,27 +162,7 @@ function EditZap({
           />
           <p className="text-xxxxs">This is performed when the Zap runs.</p>
         </div>
-        <div className="mb-14">
-          <EditZapFooter eventSelected={false} />
-        </div>
       </div>
-    </div>
-  );
-}
-
-export function EditZapFooter({ eventSelected }: { eventSelected: boolean }) {
-  return (
-    <div className="flex justify-between items-center p-2">
-      <button
-        className={`${
-          eventSelected ? '' : 'cursor-not-allowed text-brown-200 bg-gray-50'
-        } text-xxxs border-[1px] border-gray-1000 p-1`}
-      >
-        {eventSelected ? '' : 'To continue, choose an event'}
-      </button>
-      <p className="bg-purple-700 rounded-full p-1">
-        <MdAccountCircle size={20} color="white" />
-      </p>
     </div>
   );
 }

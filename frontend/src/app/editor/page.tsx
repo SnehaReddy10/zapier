@@ -130,13 +130,14 @@ export function Edit({ setCanPublish, publish }: any) {
 
       {showEditZap && (
         <EditZap
+          setShowModal={setModalType}
           setShowEditZap={setShowEditZap}
           zapType={currentIndex == 1 ? ZapCellType.trigger : ZapCellType.action}
           onEventSelect={selectEvent}
-          id={
+          zap={
             currentIndex == 1
-              ? trigger?.id
-              : actions.find((x: any) => x.index == currentIndex)?.id
+              ? trigger
+              : actions.find((x: any) => x.index == currentIndex)
           }
         />
       )}

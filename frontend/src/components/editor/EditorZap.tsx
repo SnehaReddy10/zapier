@@ -98,10 +98,12 @@ function EditorZap({
                     <RiNotionLine size={18} />
                     <span>{trigger?.trigger ?? action?.action}</span>
                   </p>
-                  <p className="bg-[#f6ffdb] px-1 py-[2px] border-[1px] border-[#eaeae4] items-center rounded-sm flex gap-1 cursor-pointer">
-                    <LuClock4 size={18} />
-                    {trigger?.interval ?? action?.interval}
-                  </p>
+                  {type == ZapCellType.trigger && (
+                    <p className="bg-[#f6ffdb] px-1 py-[2px] border-[1px] border-[#eaeae4] items-center rounded-sm flex gap-1 cursor-pointer">
+                      <LuClock4 size={18} />
+                      {trigger?.interval ?? '2 mins'}
+                    </p>
+                  )}
                 </div>
                 <p className="py-1 px-[2px] border-[1px] hover:bg-[#f7f6fd] border-white rounded-sm cursor-pointer hover:border-[1px] hover:border-[#695be8]">
                   <HiDotsVertical size={18} />

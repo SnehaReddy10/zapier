@@ -17,7 +17,7 @@ function Login() {
             <div className="w-max">
               <AuthButton
                 text="Explore Zapier Enterprise"
-                className="bg-blue-500 hover:bg-[#2b2358] py-2 px-4 text-white text-xs font-semibold"
+                className="bg-blue-500 hover:bg-blue-800 py-2 px-4 text-white text-xs font-semibold"
               />
             </div>
           </div>

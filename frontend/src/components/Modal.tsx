@@ -76,7 +76,7 @@ function Modal({
                 className="flex gap-2 items-center font-semibold py-2 my-2"
                 key={x.id}
               >
-                <img src={x.image} alt="" className="w-3 h-2" />
+                <img src={x.image} alt="" className="w-4 h-3" />
                 <p>{x.trigger}</p>
               </div>
             )))}

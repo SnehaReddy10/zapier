@@ -249,7 +249,7 @@ export function ConnectAccount({
         />
       </div>
       <p className="text-gray-600 text-xxxxs">
-        Gmail is a secure partner with Zapier.{' '}
+        {zap.trigger ?? zap.action} is a secure partner with Zapier.{' '}
         <a className="text-blue-500 underline" href="">
           Your credentials are encrypted & can be removed at any time
         </a>

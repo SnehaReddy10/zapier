@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { getAvailableEventsForActions } from '@/api/actions';
 import { getAvailableEventsForTrigger } from '@/api/triggers';
 import { ZapCellType } from '@/types/Zap';
+import TertiaryButton from '../buttons/TertiaryButton';
 
 const notionNavItems = [
   {
@@ -43,9 +44,14 @@ function EditZap({
 }) {
   const [items, setItems] = useState<any[]>([]);
   const [currentEvent, setCurrentEvent] = useState(null);
-  console.log({ zap });
+  const [currentTab, setCurrentTab] = useState(1);
 
   useEffect(() => {
+    setCurrentTab(1);
+
+    notionNavItems[2].title =
+      zapType == ZapCellType.action ? 'Action' : 'Trigger';
+
     if (zapType == ZapCellType.trigger) {
       getAvailableEventsForTrigger(zap.id).then((res) =>
         setItems(res.availableEvents)
@@ -73,35 +79,80 @@ function EditZap({
           onClick={() => setShowEditZap(false)}
         />
       </div>
-      <div className="h-8 flex gap-2 justify-around px-2 py-2 border-gray-1000 border-b-[1px]">
+      <div className="h-8 flex gap-2 justify-around items-center border-gray-1000 border-b-[1px]">
         {notionNavItems.map((x) => (
-          <div key={x.id}>{x.title}</div>
+          <div
+            onClick={() => {
+              if (x.id < currentTab) {
+                setCurrentTab(x.id);
+              }
+            }}
+            className={`flex items-center font-semibold ${
+              x.id > currentTab ? 'text-gray-800' : 'text-black'
+            } ${
+              x.id == currentTab ? 'border-b-blue-500 border-b-2 h-full' : ''
+            }`}
+            key={x.id}
+          >
+            <div className="flex">{x.title}</div>
+          </div>
         ))}
       </div>
 
-      {1 && (
-        <ChooseEvent
-          currentEvent={currentEvent}
-          zap={zap}
-          zapType={zapType}
-          items={items}
-          onEventSelect={onEventSelect}
-          setShowModal={setShowModal}
-          setCurrentEvent={setCurrentEvent}
-        />
-      )}
+      <div className="flex flex-col flex-grow shadow-lg shadow-gray-200">
+        {currentTab == 1 && (
+          <ChooseEvent
+            currentEvent={currentEvent}
+            zap={zap}
+            zapType={zapType}
+            items={items}
+            onEventSelect={onEventSelect}
+            setShowModal={setShowModal}
+            setCurrentEvent={setCurrentEvent}
+          />
+        )}
+
+        {currentTab == 2 && (
+          <ConnectAccount
+            currentEvent={currentEvent}
+            zap={zap}
+            zapType={zapType}
+            items={items}
+            onEventSelect={onEventSelect}
+            setShowModal={setShowModal}
+            setCurrentEvent={setCurrentEvent}
+          />
+        )}
+      </div>
 
       <div className="mb-14">
-        <EditZapFooter eventSelected={currentEvent == null ? false : true} />
+        <EditZapFooter
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          eventSelected={currentEvent == null ? false : true}
+        />
       </div>
     </div>
   );
 }
 
-export function EditZapFooter({ eventSelected }: { eventSelected: boolean }) {
+export function EditZapFooter({
+  currentTab,
+  eventSelected,
+  setCurrentTab,
+}: {
+  currentTab: number;
+  eventSelected: boolean;
+  setCurrentTab: (tabId: number) => void;
+}) {
   return (
     <div className="flex justify-between items-center p-2">
       <button
+        onClick={() => {
+          if (currentTab < 5) {
+            setCurrentTab(currentTab + 1);
+          }
+        }}
         className={`${
           eventSelected
             ? 'bg-blue-500 text-white cursor-pointer px-2 font-semibold'
@@ -163,6 +214,51 @@ export function ChooseEvent({
           <p className="text-xxxxs">This is performed when the Zap runs.</p>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function ConnectAccount({
+  zap,
+  setShowModal,
+  zapType,
+  currentEvent,
+  setCurrentEvent,
+  onEventSelect,
+  items,
+}: {
+  zap: any;
+  zapType: ZapCellType;
+  currentEvent: any;
+  items: any;
+  onEventSelect: (event: string, zapType: ZapCellType) => void;
+  setCurrentEvent: (event: any) => void;
+  setShowModal: (show: ZapCellType) => void;
+}) {
+  return (
+    <div className="m-4 flex flex-col gap-2">
+      <div className="h-10 flex gap-2 border-gray-1000 border-b-[1px] items-center rounded-sm px-2 py-2 border-[1px]  cursor-pointer">
+        <img src={zap.image} alt="" className="w-4 h-3" />
+        <span className="flex flex-1 font-bold">
+          {zap.trigger ?? zap.action}
+        </span>
+        <TertiaryButton
+          onclick={() => {}}
+          text="Sign in"
+          className="bg-blue-500 text-white hover:bg-blue-800 p-1"
+        />
+      </div>
+      <p className="text-gray-600 text-xxxxs">
+        Gmail is a secure partner with Zapier.{' '}
+        <a className="text-blue-500 underline" href="">
+          Your credentials are encrypted & can be removed at any time
+        </a>
+        . You can{' '}
+        <a className="text-blue-500 underline" href="">
+          manage all of your connected accounts here
+        </a>
+        .
+      </p>
     </div>
   );
 }

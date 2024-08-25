@@ -64,7 +64,7 @@ function EditorZap({
                 </p>
               </div>
               <p>
-                {index}.
+                {index}.{' '}
                 <span className="text-gray-800">
                   {type == ZapCellType.action
                     ? 'Select the event for your Zap to run'
@@ -86,7 +86,9 @@ function EditorZap({
               color={`${showMoveIcon ? 'gray' : '#f7f5f2'}`}
               className="cursor-pointer"
             />
-            <div className="flex cursor-pointer hover:border-[#5949c1] active:border-[#5949c1] border-[1px] transition-all ease-linear h-max flex-col rounded-md bg-white shadow-lg text-[#3b3c3c] shadow-gray-200 gap-2 text-xxxs py-2 w-56 px-2 font-semibold">
+            <div
+              className={`flex cursor-pointer hover:border-[#5949c1] active:border-[#5949c1] border-[1px] transition-all ease-linear h-max flex-col rounded-md bg-white shadow-lg text-[#3b3c3c] shadow-gray-200 gap-2 text-xxxs py-2 w-56 px-2 font-semibold`}
+            >
               <div className="flex gap-2 items-center justify-between">
                 <div className="flex gap-2 items-center">
                   <RiErrorWarningFill
@@ -110,7 +112,7 @@ function EditorZap({
                 </p>
               </div>
               <div className="flex gap-2">
-                {index}.
+                {index}.{' '}
                 {trigger?.eventName ?? action?.eventName ?? (
                   <p className="text-gray-400">Select the event</p>
                 )}

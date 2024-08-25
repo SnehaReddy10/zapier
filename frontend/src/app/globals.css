@@ -16,7 +16,7 @@
   }
 
   body {
-    @apply bg-[#fffdf9];
+    @apply bg-gray-90;
   }
 }
 

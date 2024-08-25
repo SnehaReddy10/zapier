@@ -45,7 +45,7 @@ function Modal({
     }
   }, []);
   return (
-    <div className="bg-[#fffdf9] text-xxxs rounded-sm shadow-sm shadow-white w-1/3">
+    <div className="bg-gray-90 text-xxxs rounded-sm shadow-sm shadow-white w-1/3">
       <ModalSearchbar />
       <ModalAppBar />
       <div className="py-2 px-4">

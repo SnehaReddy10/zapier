@@ -45,7 +45,7 @@ export function Login() {
         />
         <AuthButton
           authType="SSO"
-          className="text-[#3d4592] border-[1px] border-[#3d4592] font-semibold"
+          className="text-blue-500 border-[1px] border-blue-500 font-semibold"
           text="Continue with SSO"
         />
         <div className="flex gap-3 items-center">

@@ -4,7 +4,7 @@ import LinkButton from './buttons/LinkButton';
 
 function Navbar() {
   return (
-    <div className="flex sticky w-full bg-[#fffdf9] top-0 overflow-y-auto justify-between px-4 border-b-[1px] py-2 border-gray-200">
+    <div className="flex sticky w-full bg-gray-90 top-0 overflow-y-auto justify-between px-4 border-b-[1px] py-2 border-gray-200">
       <div className="flex gap-1 items-center">
         {/* change to LOGO */}
         <Logo />

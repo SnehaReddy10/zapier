@@ -36,7 +36,7 @@ function EventInput({
           className="absolute px-6 p-1 w-full appearance-none active:border-none select-none"
         />
         {showEvents && (
-          <div className="absolute overflow-y-scroll max-h-40 top-[42px] bg-[#fffdf9] py-2 px-1 shadow-lg shadow-gray-100 w-full">
+          <div className="absolute overflow-y-scroll max-h-40 top-[42px] bg-gray-90 py-2 px-1 shadow-lg shadow-gray-100 w-full">
             <p className="uppercase text-gray-500 font-bold mb-1 px-1">
               Create
             </p>

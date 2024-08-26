@@ -47,6 +47,7 @@ function EventInput({
             )}
             {items.map((x: any) => (
               <div
+                key={x.id}
                 onClick={() => {
                   setShowEvents(false);
                   onSelect(x);

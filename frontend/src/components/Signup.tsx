@@ -65,7 +65,7 @@ export function Signup() {
           className="w-full py-1"
         />
         <p className="text-xxs text-gray-700">
-          By signing up, you agree to Zapier's{' '}
+          By signing up, you agree to Zapier&apos;s{' '}
           <a className="underline" href="">
             terms of service
           </a>{' '}

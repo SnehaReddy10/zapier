@@ -72,7 +72,7 @@ export function Login() {
           className="w-full py-1 disabled disabled:bg-gray-200"
         />
         <p className="text-xxxs text-gray-700">
-          Don't have a Zapier account yet?
+          Don&apos;t have a Zapier account yet?
           <a className="underline hover:cursor-pointer pl-1" href="">
             Sign Up
           </a>

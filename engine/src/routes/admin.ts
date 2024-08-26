@@ -8,10 +8,10 @@ const prismaClient = new PrismaClient();
 
 adminRouter.post('/availableTrigger', async (req, res) => {
   try {
-    const { trigger, events, metaData } = req.body;
+    const { trigger, events, metaData, imgUrl } = req.body;
 
     const availableTrigger = await prismaClient.availableTriggers.create({
-      data: { trigger, metaData },
+      data: { trigger, metaData, image: imgUrl },
     });
 
     events.map(async (event: any) => {
@@ -36,10 +36,10 @@ adminRouter.post('/availableTrigger', async (req, res) => {
 
 adminRouter.post('/availableAction', async (req, res) => {
   try {
-    const { action, events, metaData } = req.body;
+    const { action, events, metaData, imgUrl } = req.body;
 
     const availableAction = await prismaClient.availableActions.create({
-      data: { action, metaData },
+      data: { action, metaData, image: imgUrl },
     });
 
     events.map(async (event: any) => {

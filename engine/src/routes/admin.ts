@@ -5,12 +5,23 @@ export const adminRouter = express.Router();
 const prismaClient = new PrismaClient();
 
 adminRouter.post('/availableTrigger', async (req, res) => {
-  const { trigger, metaData } = req.body;
+  const { trigger, events, metaData } = req.body;
 
   const availableTrigger = await prismaClient.availableTriggers.create({
     data: { trigger, metaData },
   });
-  res.json({ success: true, availableTrigger });
+  events.map(async (event: any) => {
+    await prismaClient.event.create({
+      data: { name: event.name, availableTriggersId: availableTrigger.id },
+    });
+  });
+
+  const newTrigger = await prismaClient.availableTriggers.findFirst({
+    where: { id: availableTrigger.id },
+    select: { trigger: true, events: true },
+  });
+
+  res.json({ success: true, availableTrigger, event: newTrigger });
 });
 
 adminRouter.post('/availableAction', async (req, res) => {

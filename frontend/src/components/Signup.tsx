@@ -5,8 +5,10 @@ import AuthButton from './buttons/AuthButton';
 import InputBox from './InputBox';
 import Button from './buttons/Button';
 import { CreateUser } from '@/api/auth';
+import { useRouter } from 'next/navigation';
 
 export function Signup() {
+  const router = useRouter();
   const [firstname, setFirstName] = useState<string>('');
   const [lastname, setlastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -16,9 +18,16 @@ export function Signup() {
   const handleSetLastName = (e: string) => setlastName(e);
   const handleSetEmail = (e: string) => setEmail(e);
   const handleSetPassword = (e: string) => setPassword(e);
-  const createUser = () => {
+  const createUser = async () => {
     console.log({ firstname, lastname, email, password });
-    CreateUser({ firstname, lastname, email, password });
+    const result = await CreateUser({ firstname, lastname, email, password });
+    if (result.success) {
+      setEmail('');
+      setlastName('');
+      setFirstName('');
+      setPassword('');
+      router.push('/zaps');
+    }
   };
 
   return (

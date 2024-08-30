@@ -6,27 +6,38 @@ import InputBox from './InputBox';
 import Button from './buttons/Button';
 import { CreateUser } from '@/api/auth';
 import { useRouter } from 'next/navigation';
+import { USER } from '@/constants/error-codes';
 
 export function Signup() {
   const router = useRouter();
   const [firstname, setFirstName] = useState<string>('');
   const [lastname, setlastName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState({ mailId: '', error: '' });
   const [password, setPassword] = useState<string>('');
 
   const handleSetFirstName = (e: string) => setFirstName(e);
   const handleSetLastName = (e: string) => setlastName(e);
-  const handleSetEmail = (e: string) => setEmail(e);
+  const handleSetEmail = (e: string) =>
+    setEmail((email) => ({ ...email, mailId: e }));
   const handleSetPassword = (e: string) => setPassword(e);
   const createUser = async () => {
     console.log({ firstname, lastname, email, password });
-    const result = await CreateUser({ firstname, lastname, email, password });
+    const result = await CreateUser({
+      firstname,
+      lastname,
+      email: email.mailId,
+      password,
+    });
     if (result.success) {
-      setEmail('');
+      setEmail({ mailId: '', error: '' });
       setlastName('');
       setFirstName('');
       setPassword('');
       router.push('/zaps');
+    } else {
+      if (result.error.code == USER.ALREADY_EXISTS) {
+        setEmail((e) => ({ ...e, error: result.error.message }));
+      }
     }
   };
 
@@ -48,6 +59,7 @@ export function Signup() {
           onChange={(e) => handleSetEmail(e)}
           label="Work Email"
           required={true}
+          error={email.error}
         />
         <div className="grid grid-cols-2 gap-2">
           <InputBox

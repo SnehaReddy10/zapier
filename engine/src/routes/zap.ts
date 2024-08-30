@@ -31,6 +31,7 @@ zapRouter.post('', async (req, res) => {
         trigger: { select: { trigger: true } },
         actions: { select: { action: true } },
         userId: true,
+        id: true,
       },
     });
 
@@ -52,10 +53,16 @@ zapRouter.get('', authMiddleware, async (req, res) => {
       select: {
         actions: { select: { action: true } },
         trigger: { select: { trigger: true } },
+        id: true,
       },
     });
 
-    res.json({ success: true, zaps });
+    const restructuredZaps = zaps.map((x) => {
+      const actions = x.actions.map((y) => y.action);
+      return { ...x, actions, trigger: x.trigger?.trigger };
+    });
+
+    res.json({ success: true, zaps: restructuredZaps });
   } catch (err) {
     console.log('Get All User Zaps Failed', err);
     return res.json({ success: false, message: GENERIC.ServiceUnavailable });
@@ -69,6 +76,7 @@ zapRouter.get('/:zapId', authMiddleware, async (req, res) => {
     const zap = await prismaClient.zap.findFirst({
       where: { id: zapId, userId: req.userId },
       select: {
+        id: true,
         User: true,
         trigger: true,
         actions: { select: { action: true } },

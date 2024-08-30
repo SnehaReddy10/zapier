@@ -25,10 +25,12 @@ zapRouter.post('', async (req, res) => {
             eventId: x.eventId,
           })),
         },
+        userId: req.userId,
       },
       select: {
         trigger: { select: { trigger: true } },
         actions: { select: { action: true } },
+        userId: true,
       },
     });
 

@@ -6,6 +6,7 @@ import { zapRouter } from './routes/zap';
 import { actionRouter } from './routes/action';
 import { authRouter } from './routes/auth';
 import cors from 'cors';
+import { authMiddleware } from './middleware/auth';
 require('dotenv').config();
 
 const app = express();
@@ -18,7 +19,7 @@ async function main() {
   app.use('/api/v1/admin', adminRouter);
   app.use('/api/v1/trigger', triggerRouter);
   app.use('/api/v1/action', actionRouter);
-  app.use('/api/v1/zap', zapRouter);
+  app.use('/api/v1/zap', authMiddleware, zapRouter);
 }
 
 main()

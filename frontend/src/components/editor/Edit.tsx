@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Modal from '../Modal';
 import EditZap from './EditZap';
 import EditorZap from './EditorZap';
+import { useRouter } from 'next/navigation';
 
 export function Edit({ setCanPublish, publish }: any) {
   const [trigger, setTrigger] = useState<any>(null);
@@ -13,6 +14,7 @@ export function Edit({ setCanPublish, publish }: any) {
   const [actions, setActions] = useState<any>([{ index: currentIndex + 1 }]);
   const [modalType, setModalType] = useState<null | ZapCellType>(null);
   const [showEditZap, setShowEditZap] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (
@@ -26,6 +28,7 @@ export function Edit({ setCanPublish, publish }: any) {
 
     if (publish) {
       createZap({ actions, trigger });
+      router.push('/zaps');
     }
   }, [trigger, actions, publish]);
 

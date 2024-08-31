@@ -91,9 +91,23 @@ zapRouter.get('/:zapId', authMiddleware, async (req, res) => {
       },
     });
 
+    const actions = zap?.actions.map((y) => ({
+      ...y.action,
+      event: y.event,
+      eventName: y.event?.name,
+    }));
+
     res.json({
       success: true,
-      zap,
+      zap: {
+        ...zap,
+        actions,
+        trigger: {
+          ...zap?.trigger?.trigger,
+          event: zap?.trigger?.event,
+          eventName: zap?.trigger?.event?.name,
+        },
+      },
     });
   } catch (err) {
     console.log('Create Zap By Id', err);

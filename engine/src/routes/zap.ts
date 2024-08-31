@@ -78,14 +78,23 @@ zapRouter.get('/:zapId', authMiddleware, async (req, res) => {
       select: {
         id: true,
         User: true,
-        trigger: true,
-        actions: { select: { action: true } },
+        trigger: {
+          select: {
+            event: true,
+            trigger: true,
+            id: true,
+          },
+        },
+        actions: {
+          select: { action: true, event: true, id: true },
+        },
       },
     });
 
-    const actions = zap?.actions.map((y) => y.action);
-
-    res.json({ success: true, zap: { ...zap, actions } });
+    res.json({
+      success: true,
+      zap,
+    });
   } catch (err) {
     console.log('Create Zap By Id', err);
     return res.json({ success: false, message: GENERIC.ServiceUnavailable });

@@ -1,4 +1,5 @@
 export type Zap = {
+  id: string;
   title: string;
   actions: any[];
   lastEdit: Date;

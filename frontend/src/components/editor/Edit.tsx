@@ -1,6 +1,6 @@
 'use client';
 
-import { createZap } from '@/api/zaps';
+import { createZap, getZapById } from '@/api/zaps';
 import { ZapCellType } from '@/types/Zap';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal';
@@ -8,13 +8,30 @@ import EditZap from './EditZap';
 import EditorZap from './EditorZap';
 import { useRouter } from 'next/navigation';
 
-export function Edit({ setCanPublish, publish }: any) {
+export function Edit({ setCanPublish, publish, zapId }: any) {
   const [trigger, setTrigger] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [actions, setActions] = useState<any>([{ index: currentIndex + 1 }]);
   const [modalType, setModalType] = useState<null | ZapCellType>(null);
   const [showEditZap, setShowEditZap] = useState(false);
   const router = useRouter();
+
+  const handleGetUserZapById = async () => {
+    if (zapId) {
+      const result = await getZapById({
+        zapId,
+      });
+      if (result.success) {
+        const zap = result.zap;
+        setActions(zap.actions);
+        setTrigger(zap.trigger);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleGetUserZapById();
+  }, [zapId]);
 
   useEffect(() => {
     if (

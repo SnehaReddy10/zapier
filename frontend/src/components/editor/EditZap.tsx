@@ -48,6 +48,7 @@ function EditZap({
 
   useEffect(() => {
     setCurrentTab(1);
+    setCurrentEvent(zap.event);
 
     notionNavItems[2].title =
       zapType == ZapCellType.action ? 'Action' : 'Trigger';

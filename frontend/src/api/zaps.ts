@@ -29,3 +29,16 @@ export async function createZap({ actions, trigger }: any) {
     return { success: false, error: err.response.data.error };
   }
 }
+
+export async function getZapById({ zapId }: { zapId: string }) {
+  try {
+    const result = await axios.get(`${BACKEND_URL}/zap/${zapId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN)}` },
+    });
+    console.log('result', result);
+    return result.data;
+  } catch (err: any) {
+    console.log(err.response.data.error);
+    return { success: false, error: err.response.data.error };
+  }
+}

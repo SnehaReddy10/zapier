@@ -35,7 +35,9 @@ function InputBox({
           error ? 'border-red-500' : 'border-gray-400'
         } rounded-sm h-8`}
       />
-      {error && <span className="text-red-500 text-xxxs">{error}</span>}
+      {error && (
+        <span className="text-red-500 text-xxxs w-full text-left">{error}</span>
+      )}
     </div>
   );
 }

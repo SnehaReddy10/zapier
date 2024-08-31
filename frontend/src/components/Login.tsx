@@ -7,20 +7,32 @@ import AuthButton from './buttons/AuthButton';
 import { useState } from 'react';
 import { LoginUser } from '@/api/auth';
 import { useRouter } from 'next/navigation';
+import { USER } from '@/constants/error-codes';
 
 export function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState({ email: '', error: '' });
+  const [password, setPassword] = useState({ password: '', error: '' });
 
-  const handleSetEmail = (e: string) => setEmail(e);
-  const handleSetPassword = (e: string) => setPassword(e);
+  const handleSetEmail = (email: string) =>
+    setEmail((e) => ({ ...e, email: email }));
+  const handleSetPassword = (password: string) =>
+    setPassword((e) => ({ ...e, password: password }));
   const loginUser = async () => {
-    const result = await LoginUser({ email, password });
+    const result = await LoginUser({
+      email: email.email,
+      password: password.password,
+    });
     if (result.success) {
-      setEmail('');
-      setPassword('');
+      setEmail({ email: '', error: '' });
+      setPassword({ password: '', error: '' });
       router.push('/zaps');
+    } else {
+      if (result.error.code == USER.NOT_FOUND) {
+        setEmail((e) => ({ ...e, error: result.error.message }));
+      } else if (result.error.code == USER.INCORRECT_PASSWORD) {
+        setPassword((e) => ({ ...e, error: result.error.message }));
+      }
     }
   };
 
@@ -58,16 +70,18 @@ export function Login() {
           placeHolder="Email"
           label="Email"
           required={true}
+          error={email.error}
         />
         <InputBox
           onChange={handleSetPassword}
           placeHolder="Password"
           label="Password"
           required={true}
+          error={password.error}
         />
         <Button
           onClick={loginUser}
-          disabled={email == '' || password == ''}
+          disabled={email.email == '' || password.password == ''}
           text="Continue"
           className="w-full py-1 disabled disabled:bg-gray-200"
         />

@@ -75,7 +75,7 @@ authRouter.post('/login', async (req, res) => {
     }
 
     const user = await prismaClient.user.findFirst({
-      where: { email, password },
+      where: { email },
     });
 
     if (!user) {
@@ -84,6 +84,16 @@ authRouter.post('/login', async (req, res) => {
         error: {
           message: USER_ERROR_MESSAGE.NOT_FOUND,
           code: USER_ERROR_CODE.NOT_FOUND,
+        },
+      });
+    }
+
+    if (user.password !== password) {
+      return res.status(STATUS_CODES.BadRequest).json({
+        success: false,
+        error: {
+          message: USER_ERROR_MESSAGE.INCORRECT_PASSWORD,
+          code: USER_ERROR_CODE.INCORRECT_PASSWORD,
         },
       });
     }

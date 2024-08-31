@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { RiAsterisk } from 'react-icons/ri';
 
 function InputBox({

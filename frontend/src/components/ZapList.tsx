@@ -4,28 +4,10 @@ import { RxChevronDown } from 'react-icons/rx';
 import TertiaryButton from './buttons/TertiaryButton';
 import Zap from './Zap';
 import SearchBar from './SearchBar';
-import { ActionType } from '@/types/Zap';
 import { useEffect, useState } from 'react';
 import { CiFolderOn } from 'react-icons/ci';
 import { GoZap } from 'react-icons/go';
 import { getAllZaps } from '@/api/zaps';
-
-const zaps = [
-  {
-    id: 1,
-    title: 'Untitled zap',
-    actions: [ActionType.NOTION, ActionType.GMAIL],
-    lastEdit: new Date(),
-    running: true,
-  },
-  {
-    id: 2,
-    title: 'Untitled zap',
-    actions: [ActionType.NOTION, ActionType.GMAIL],
-    lastEdit: new Date(),
-    running: true,
-  },
-];
 
 function ZapList() {
   const [zaps, setZaps] = useState<any[]>([]);

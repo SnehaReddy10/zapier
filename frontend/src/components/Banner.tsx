@@ -1,5 +1,4 @@
 import { ImCross } from 'react-icons/im';
-import { MdCancel } from 'react-icons/md';
 
 function Banner() {
   return (

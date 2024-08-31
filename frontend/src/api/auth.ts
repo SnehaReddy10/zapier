@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BACKEND_URL } from '../../config';
+import { BACKEND_ENGINE_URL } from '../../config';
 import { TOKEN } from '@/constants';
 
 export async function CreateUser({
@@ -14,7 +14,7 @@ export async function CreateUser({
   password: string;
 }) {
   try {
-    const result = await axios.post(`${BACKEND_URL}/auth/signup`, {
+    const result = await axios.post(`${BACKEND_ENGINE_URL}/auth/signup`, {
       firstname,
       lastname,
       email,
@@ -39,7 +39,7 @@ export async function LoginUser({
   password: string;
 }) {
   try {
-    const result = await axios.post(`${BACKEND_URL}/auth/login`, {
+    const result = await axios.post(`${BACKEND_ENGINE_URL}/auth/login`, {
       email,
       password,
     });

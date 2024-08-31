@@ -18,6 +18,8 @@ model AvailableActions {
   action   String
   metaData String
   Action   Action[]
+  image    String?
+  events   Event[]
 }
 
 model AvailableTriggers {
@@ -25,12 +27,25 @@ model AvailableTriggers {
   trigger  String
   metaData String
   Trigger  Trigger[]
+  image    String?
+  events   Event[]
 }
 
 model Zap {
   id      String   @id @default(uuid())
   trigger Trigger?
   actions Action[]
+  User    User?    @relation(fields: [userId], references: [id])
+  userId  String?
+}
+
+model User {
+  id        String @id @default(uuid())
+  email     String
+  firstname String
+  lastname  String
+  password  String
+  zaps      Zap[]
 }
 
 model Action {
@@ -39,6 +54,8 @@ model Action {
   availableActionId String
   zap               Zap?             @relation(fields: [zapId], references: [id])
   zapId             String?
+  event             Event?           @relation(fields: [eventId], references: [id])
+  eventId           String?
 }
 
 model Trigger {
@@ -47,14 +64,27 @@ model Trigger {
   availableTriggerId String
   zap                Zap?              @relation(fields: [zapId], references: [id])
   zapId              String            @unique
+  event              Event?            @relation(fields: [eventId], references: [id])
+  eventId            String?
 }
 
 model zaps {
   zapId  String @unique
-  userId String
+  userId String @unique
 }
 
 model zapRun {
   zapId  String @unique
-  userId String
+  userId String @unique
+}
+
+model Event {
+  id                  String             @id @default(uuid())
+  name                String
+  AvailableTrigger    AvailableTriggers? @relation(fields: [availableTriggersId], references: [id])
+  availableTriggersId String?
+  AvailableAction     AvailableActions?  @relation(fields: [availableActionsId], references: [id])
+  availableActionsId  String?
+  Action              Action[]
+  Trigger             Trigger[]
 }

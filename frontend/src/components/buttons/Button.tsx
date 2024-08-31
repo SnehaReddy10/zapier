@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -11,6 +12,8 @@ function Button({
   disabled,
   onClick,
 }: any) {
+  const router = useRouter();
+
   return (
     <button
       onClick={onClick}
@@ -34,7 +37,7 @@ function Button({
       }`}
     >
       {showIcon && <FcGoogle size={25} />}
-      <a href={link}>{text}</a>
+      <button onClick={() => router.push(link)}>{text}</button>
     </button>
   );
 }

@@ -6,11 +6,12 @@ import EventInput from '../EventInput';
 import { MdAccountCircle } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import { getAvailableEventsForActions } from '@/api/actions';
-import { getAvailableEventsForTrigger } from '@/api/triggers';
+import { findNewRecords, getAvailableEventsForTrigger } from '@/api/triggers';
 import { ZapCellType } from '@/types/Zap';
 import TertiaryButton from '../buttons/TertiaryButton';
 import ZapUrlButton from '../buttons/ZapUrlButton';
 import { IoCheckmarkCircle } from 'react-icons/io5';
+import Search from '../Search';
 
 const notionNavItems = [
   {
@@ -127,7 +128,9 @@ function EditZap({
           />
         )}
 
-        {currentTab == 4 && <Test />}
+        {zapType == ZapCellType.trigger && currentTab == 4 && (
+          <Test triggerId={zap.id} />
+        )}
       </div>
 
       <div className="mb-14">
@@ -214,6 +217,7 @@ export function ChooseEvent({
             }}
             items={items}
             label={'Event'}
+            placeHolder={'Choose an event'}
             required={true}
           />
           <p className="text-xxxxs">This is performed when the Zap runs.</p>
@@ -268,9 +272,22 @@ export function ConnectAccount({
   );
 }
 
-export function Test() {
+export function Test({ triggerId }: { triggerId: string }) {
+  const [records, setRecords] = useState([]);
+
+  const handleFindNewRecords = async () => {
+    const result = await findNewRecords(triggerId);
+    if (result.success) {
+      setRecords(result.records);
+    }
+  };
+
+  useEffect(() => {
+    handleFindNewRecords();
+  }, [triggerId]);
+
   return (
-    <div className="m-4">
+    <div className="m-4 flex flex-col gap-4">
       <div className="flex flex-col gap-1 p-4 text-center items-center bg-blue-100">
         <h1 className="text-lg font-bold">Your webhook URL</h1>
         <p className="text-xs text-gray-60">
@@ -297,7 +314,22 @@ export function Test() {
         </div>
       </div>
 
-      <div></div>
+      <div>
+        <Search
+          selectedItem={undefined}
+          placeHolder="Search"
+          setShowEvents={() => {}}
+        />
+        <div className="flex">
+          <div className="overflow-y-scroll">
+            {records.map((x, index) => (
+              <div>
+                <p>Request {index}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

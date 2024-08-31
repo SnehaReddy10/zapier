@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { RiAsterisk } from 'react-icons/ri';
-import { VscSearch } from 'react-icons/vsc';
+import Search from './Search';
 
 function EventInput({
   selectedItem,
   items,
   label,
+  placeHolder,
   required,
   onSelect,
 }: {
   selectedItem: any;
   items: any;
   label: string;
+  placeHolder: string;
   required: boolean;
   onSelect: (e: any) => void;
 }) {
@@ -24,16 +26,10 @@ function EventInput({
         {required && '(required)'}
       </p>
       <div className="relative flex gap-1 items-center h-6 border-[1px] border-gray-400 rounded-sm hover:border-purple-700">
-        {!selectedItem && <VscSearch size={20} className="z-10 mx-1" />}
-        <input
-          onClick={(e: any) => {
-            e.preventDefault();
-            setShowEvents((c) => !c);
-          }}
-          value={selectedItem?.name ?? ''}
-          type="text"
-          placeholder="Choose an event"
-          className="absolute px-6 p-1 w-full appearance-none active:border-none select-none"
+        <Search
+          selectedItem={selectedItem}
+          placeHolder={placeHolder}
+          setShowEvents={setShowEvents}
         />
         {showEvents && (
           <div className="absolute overflow-y-scroll max-h-40 top-[42px] bg-gray-90 py-2 px-1 shadow-lg shadow-gray-100 w-full">

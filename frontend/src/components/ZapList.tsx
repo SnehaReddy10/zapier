@@ -8,9 +8,11 @@ import { useEffect, useState } from 'react';
 import { CiFolderOn } from 'react-icons/ci';
 import { GoZap } from 'react-icons/go';
 import { getAllZaps } from '@/api/zaps';
+import { useRouter } from 'next/navigation';
 
 function ZapList() {
   const [zaps, setZaps] = useState<any[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     getAllZaps().then((res: any) => {
@@ -39,9 +41,12 @@ function ZapList() {
               <div className="grid grid-cols-1 gap-1 items-center">
                 <div className="flex gap-1 p-1 items-center hover:bg-[#f7f6fd] hover:text-[#695be8]">
                   <GoZap color="black" size={15} className="col-span-1" />
-                  <a href="/editor" className="col-span-3">
+                  <button
+                    onClick={() => router.push('/editor')}
+                    className="col-span-3"
+                  >
                     New Zap
-                  </a>
+                  </button>
                 </div>
                 <div className="flex gap-1 p-1 items-center hover:bg-[#f7f6fd] hover:text-[#695be8]">
                   <CiFolderOn size={15} color="black" className="col-span-1" />

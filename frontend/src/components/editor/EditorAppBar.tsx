@@ -1,3 +1,6 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { BiHomeAlt2, BiSolidZap } from 'react-icons/bi';
 import { CiFolderOn } from 'react-icons/ci';
 import { FiChevronDown } from 'react-icons/fi';
@@ -5,6 +8,8 @@ import { IoIosHelpCircleOutline } from 'react-icons/io';
 import { TbGridDots } from 'react-icons/tb';
 
 export function EditorAppbar() {
+  const router = useRouter();
+
   return (
     <div className="flex gap-1 justify-between bg-[#2d2e2e] text-white text-xxxs p-1 py-[6px]">
       <div className="flex gap-3 items-center">
@@ -17,7 +22,14 @@ export function EditorAppbar() {
       </div>
       <div className="flex gap-2 items-center">
         <CiFolderOn size={15} color="white" />
-        <a href="">Home</a> /
+        <button
+          onClick={() => {
+            router.push('/zaps');
+          }}
+        >
+          Home
+        </button>{' '}
+        /
         <div className="flex gap-2 items-center">
           <button className="rounded-full bg-[#2d2e2e p-[2px]">SR</button>
           Untitled Zap{' '}

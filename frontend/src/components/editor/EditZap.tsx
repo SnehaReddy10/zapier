@@ -9,6 +9,8 @@ import { getAvailableEventsForActions } from '@/api/actions';
 import { getAvailableEventsForTrigger } from '@/api/triggers';
 import { ZapCellType } from '@/types/Zap';
 import TertiaryButton from '../buttons/TertiaryButton';
+import ZapUrlButton from '../buttons/ZapUrlButton';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 
 const notionNavItems = [
   {
@@ -124,6 +126,8 @@ function EditZap({
             setCurrentEvent={setCurrentEvent}
           />
         )}
+
+        {currentTab == 4 && <Test />}
       </div>
 
       <div className="mb-14">
@@ -260,6 +264,40 @@ export function ConnectAccount({
         </a>
         .
       </p>
+    </div>
+  );
+}
+
+export function Test() {
+  return (
+    <div className="m-4">
+      <div className="flex flex-col gap-1 p-4 text-center items-center bg-blue-100">
+        <h1 className="text-lg font-bold">Your webhook URL</h1>
+        <p className="text-xs text-gray-60">
+          You’ll need to configure your application with this Zap’s webhook URL.
+        </p>
+        <ZapUrlButton />
+        <p className="text-justify">
+          We‘ve generated a custom webhook URL for you to send requests to. You
+          can add silent/ if your application prefers getting an empty response.
+          Learn more about using webhooks.
+        </p>
+      </div>
+
+      <div className="flex gap-2">
+        <IoCheckmarkCircle fill="green" size={60} />
+        <div className="flex flex-col gap-1">
+          <p>
+            We found records in your Webhooks by Zapier account. We will load up
+            to 3 most recent records, that have not appeared previously.
+          </p>
+          <a href="" className="underline text-blue-500">
+            Learn more about test records
+          </a>
+        </div>
+      </div>
+
+      <div></div>
     </div>
   );
 }

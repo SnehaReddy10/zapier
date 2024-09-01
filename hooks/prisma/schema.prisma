@@ -29,6 +29,7 @@ model AvailableTriggers {
   Trigger  Trigger[]
   image    String?
   events   Event[]
+  HookReq  HookReq[]
 }
 
 model Zap {
@@ -66,7 +67,6 @@ model Trigger {
   zapId              String            @unique
   event              Event?            @relation(fields: [eventId], references: [id])
   eventId            String?
-  HookReq            HookReq[]
 }
 
 model zaps {
@@ -91,8 +91,8 @@ model Event {
 }
 
 model HookReq {
-  id        String  @id @default(uuid())
-  payload   String
-  trigger   Trigger @relation(fields: [triggerId], references: [id])
-  triggerId String
+  id                  String            @id @default(uuid())
+  payload             String
+  trigger             AvailableTriggers @relation(fields: [availableTriggersId], references: [id])
+  availableTriggersId String
 }

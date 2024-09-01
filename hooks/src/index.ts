@@ -18,7 +18,10 @@ app.post('/test-trigger/:triggerId', async (req, res) => {
   const payload = req.body;
 
   await prismaClient.hookReq.create({
-    data: { payload: JSON.stringify(payload), triggerId: req.params.triggerId },
+    data: {
+      payload: JSON.stringify(payload),
+      availableTriggersId: req.params.triggerId,
+    },
   });
 
   return res.json({ success: true });
@@ -26,7 +29,7 @@ app.post('/test-trigger/:triggerId', async (req, res) => {
 
 app.get('/find-new-records/:triggerId', async (req, res) => {
   const records = await prismaClient.hookReq.findMany({
-    where: { triggerId: req.params.triggerId },
+    where: { availableTriggersId: req.params.triggerId },
   });
   return res.json({ success: true, records });
 });

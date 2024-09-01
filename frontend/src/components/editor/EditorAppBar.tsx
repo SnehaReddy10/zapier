@@ -38,7 +38,7 @@ export function EditorAppbar() {
         </div>
       </div>
       <div className="flex gap-3 justify-center items-center">
-        <p>126%</p>
+        <p>{100}%</p>
         <p className="flex items-center gap-1">
           <IoIosHelpCircleOutline color="white" size={14} />
           Help

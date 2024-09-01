@@ -39,7 +39,7 @@ function Button({
       }`}
     >
       {showIcon && <FcGoogle size={25} />}
-      <button onClick={() => router.push(link)}>{text}</button>
+      <p onClick={() => router.push(link)}>{text}</p>
     </button>
   );
 }

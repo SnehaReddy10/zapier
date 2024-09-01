@@ -17,6 +17,7 @@ export enum ZapCellType {
 }
 
 export type Action = {
+  id: String;
   action: string;
   interval: string;
   description: string;
@@ -25,6 +26,7 @@ export type Action = {
 };
 
 export type Trigger = {
+  id: String;
   trigger: string;
   interval: string;
   description: string;

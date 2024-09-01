@@ -12,6 +12,7 @@ import TertiaryButton from '../buttons/TertiaryButton';
 import ZapUrlButton from '../buttons/ZapUrlButton';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import Search from '../Search';
+import { LiaDotCircle } from 'react-icons/lia';
 
 const notionNavItems = [
   {
@@ -287,7 +288,7 @@ export function Test({ triggerId }: { triggerId: string }) {
   }, [triggerId]);
 
   return (
-    <div className="m-4 flex flex-col gap-4">
+    <div className="m-4 flex flex-col gap-4 overflow-y-scroll h-72">
       <div className="flex flex-col gap-1 p-4 text-center items-center bg-blue-100">
         <h1 className="text-lg font-bold">Your webhook URL</h1>
         <p className="text-xs text-gray-60">
@@ -321,12 +322,25 @@ export function Test({ triggerId }: { triggerId: string }) {
           setShowEvents={() => {}}
         />
         <div className="flex">
-          <div className="overflow-y-scroll">
-            {records.map((x, index) => (
-              <div>
-                <p>Request {index}</p>
-              </div>
-            ))}
+          <div className="grid grid-cols-2 border-[1px] border-blue-500 w-full">
+            {records.map((x: any, index) => {
+              const payload = JSON.parse(x.payload);
+              return (
+                <>
+                  <div key={x.id} className="flex gap-1 bg-purple-50 p-1">
+                    <LiaDotCircle size={30} />
+                    <p>Request {index}</p>
+                  </div>
+                  <div className="flex flex-col gap-1 flex-1">
+                    {Object.keys(payload).map((y) => (
+                      <div>
+                        <p className="bg-purple-50 p-1">{y}</p> : {payload[y]}
+                      </div>
+                    ))}
+                  </div>
+                </>
+              );
+            })}
           </div>
         </div>
       </div>

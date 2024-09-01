@@ -332,8 +332,8 @@ export function Test({ triggerId }: { triggerId: string }) {
                     <p>Request {index}</p>
                   </div>
                   <div className="flex flex-col gap-1 flex-1">
-                    {Object.keys(payload).map((y) => (
-                      <div>
+                    {Object.keys(payload).map((y, index) => (
+                      <div key={index}>
                         <p className="bg-purple-50 p-1">{y}</p> : {payload[y]}
                       </div>
                     ))}

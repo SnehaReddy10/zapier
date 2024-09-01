@@ -6,13 +6,10 @@ import EventInput from '../EventInput';
 import { MdAccountCircle } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import { getAvailableEventsForActions } from '@/api/actions';
-import { findNewRecords, getAvailableEventsForTrigger } from '@/api/triggers';
+import { getAvailableEventsForTrigger } from '@/api/triggers';
 import { ZapCellType } from '@/types/Zap';
 import TertiaryButton from '../buttons/TertiaryButton';
-import ZapUrlButton from '../buttons/ZapUrlButton';
-import { IoCheckmarkCircle } from 'react-icons/io5';
-import Search from '../Search';
-import { LiaDotCircle } from 'react-icons/lia';
+import { TestTrigger } from './TestTrigger';
 
 const notionNavItems = [
   {
@@ -130,7 +127,7 @@ function EditZap({
         )}
 
         {zapType == ZapCellType.trigger && currentTab == 4 && (
-          <Test triggerId={zap.id} />
+          <TestTrigger triggerId={zap.id} />
         )}
       </div>
 
@@ -158,8 +155,10 @@ export function EditZapFooter({
     <div className="flex justify-between items-center p-2">
       <button
         onClick={() => {
-          if (currentTab < 5) {
+          if (currentTab < 4) {
             setCurrentTab(currentTab + 1);
+          } else {
+            setCurrentTab(1);
           }
         }}
         className={`${
@@ -168,7 +167,11 @@ export function EditZapFooter({
             : 'cursor-not-allowed text-brown-200 bg-gray-50'
         } text-xxxs border-[1px] border-gray-1000 p-1 rounded-sm`}
       >
-        {eventSelected ? 'Continue' : 'To continue, choose an event'}
+        {eventSelected
+          ? currentTab == 4
+            ? 'Continue with selected record'
+            : 'Continue'
+          : 'To continue, choose an event'}
       </button>
       <p className="bg-blue-500 rounded-full p-1">
         <MdAccountCircle size={20} color="white" />
@@ -269,81 +272,6 @@ export function ConnectAccount({
         </a>
         .
       </p>
-    </div>
-  );
-}
-
-export function Test({ triggerId }: { triggerId: string }) {
-  const [records, setRecords] = useState([]);
-
-  const handleFindNewRecords = async () => {
-    const result = await findNewRecords(triggerId);
-    if (result.success) {
-      setRecords(result.records);
-    }
-  };
-
-  useEffect(() => {
-    handleFindNewRecords();
-  }, [triggerId]);
-
-  return (
-    <div className="m-4 flex flex-col gap-4 overflow-y-scroll h-72">
-      <div className="flex flex-col gap-1 p-4 text-center items-center bg-blue-100">
-        <h1 className="text-lg font-bold">Your webhook URL</h1>
-        <p className="text-xs text-gray-60">
-          You’ll need to configure your application with this Zap’s webhook URL.
-        </p>
-        <ZapUrlButton />
-        <p className="text-justify">
-          We‘ve generated a custom webhook URL for you to send requests to. You
-          can add silent/ if your application prefers getting an empty response.
-          Learn more about using webhooks.
-        </p>
-      </div>
-
-      <div className="flex gap-2">
-        <IoCheckmarkCircle fill="green" size={60} />
-        <div className="flex flex-col gap-1">
-          <p>
-            We found records in your Webhooks by Zapier account. We will load up
-            to 3 most recent records, that have not appeared previously.
-          </p>
-          <a href="" className="underline text-blue-500">
-            Learn more about test records
-          </a>
-        </div>
-      </div>
-
-      <div>
-        <Search
-          selectedItem={undefined}
-          placeHolder="Search"
-          setShowEvents={() => {}}
-        />
-        <div className="flex">
-          <div className="grid grid-cols-2 border-[1px] border-blue-500 w-full">
-            {records.map((x: any, index) => {
-              const payload = JSON.parse(x.payload);
-              return (
-                <>
-                  <div key={x.id} className="flex gap-1 bg-purple-50 p-1">
-                    <LiaDotCircle size={30} />
-                    <p>Request {index}</p>
-                  </div>
-                  <div className="flex flex-col gap-1 flex-1">
-                    {Object.keys(payload).map((y, index) => (
-                      <div key={index}>
-                        <p className="bg-purple-50 p-1">{y}</p> : {payload[y]}
-                      </div>
-                    ))}
-                  </div>
-                </>
-              );
-            })}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

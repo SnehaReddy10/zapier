@@ -5,11 +5,11 @@ import { EditorPublishBar } from '@/components/editor/EditorPublishBar';
 import { EditorSideBar } from '@/components/editor/EditorSideBar';
 import { useState } from 'react';
 import { Edit } from '@/components/editor/Edit';
-import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 function Editor() {
-  const pathname = usePathname();
-  const zapId = pathname.slice(8, pathname.length);
+  const params = useParams();
+  const zapId = params.zapId;
 
   const [canPublish, setCanPublish] = useState(false);
   const [publish, setPublish] = useState(false);

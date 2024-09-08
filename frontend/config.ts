@@ -1,3 +1,4 @@
 export const BACKEND_ENGINE_URL = process.env.NEXT_PUBLIC_BACKEND_ENGINE_URL;
 export const BACKEND_HOOKS_URL =
   process.env.NEXT_PUBLIC_BACKEND_ENGINE_HOOKS_URL;
+export const ZAP_HOOK_URL = process.env.NEXT_PUBLIC_ZAP_WEBHOOK_URL;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import SecondaryButton from './SecondaryButton';
+import { ZAP_HOOK_URL } from '../../../config';
 
-const zapUrl =
-  'http://localhost:3001/12d100be-4e45-4b4e-81e2-97771d686b22/b5833745-e6a5-44fb-b152-94fb91b8ff89';
+const zapUrl = ZAP_HOOK_URL || '';
 
 function ZapUrlButton() {
   const [copied, setCopied] = useState(false);

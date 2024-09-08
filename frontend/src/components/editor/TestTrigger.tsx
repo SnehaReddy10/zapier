@@ -6,15 +6,29 @@ import Search from '../Search';
 import ZapUrlButton from '../buttons/ZapUrlButton';
 import SecondaryButton from '../buttons/SecondaryButton';
 
-export function TestTrigger({ triggerId }: { triggerId: string }) {
-  const [records, setRecords] = useState([]);
-  const [selectedRecord, setSelectedRecord] = useState(0);
+interface Record {
+  availableTriggersId: string;
+  id: string;
+  payload: string;
+}
+
+export function TestTrigger({
+  triggerId,
+  setSelectedRecord,
+}: {
+  triggerId: string;
+  setSelectedRecord: (id: string) => void;
+}) {
+  const [records, setRecords] = useState<Record[]>([]);
+  const [record, setRecord] = useState<string>('');
   const [selectedPayload, setSelectedPayload] = useState<any>({});
 
   const handleFindNewRecords = async () => {
     const result = await findNewRecords(triggerId);
     if (result.success) {
       setRecords(result.records);
+      setRecord(result.records[0].id);
+      setSelectedRecord(result.records[0].id);
     }
   };
 
@@ -23,12 +37,12 @@ export function TestTrigger({ triggerId }: { triggerId: string }) {
   }, [triggerId]);
 
   useEffect(() => {
-    if (selectedRecord < records.length) {
-      const i: any = records[selectedRecord];
-      const payload = JSON.parse(i.payload);
+    const newRecord: any = records.find((x) => x.id == record);
+    if (record) {
+      const payload = JSON.parse(newRecord.payload);
       setSelectedPayload(payload);
     }
-  }, [selectedRecord, records]);
+  }, [record, records]);
 
   return (
     <div className="m-4 flex flex-col gap-4 overflow-y-scroll h-72">
@@ -69,10 +83,13 @@ export function TestTrigger({ triggerId }: { triggerId: string }) {
             {records.map((x: any, index) => {
               return (
                 <div
-                  onClick={() => setSelectedRecord(index)}
+                  onClick={() => {
+                    setRecord(x.id);
+                    setSelectedRecord(x.id);
+                  }}
                   key={x.id}
                   className={`flex gap-1 p-1 items-center justify-center ${
-                    selectedRecord == index ? 'bg-purple-50' : ''
+                    record == x.id ? 'bg-purple-50' : ''
                   }`}
                 >
                   <LiaDotCircle size={20} />

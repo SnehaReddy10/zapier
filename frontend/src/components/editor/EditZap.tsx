@@ -46,6 +46,7 @@ function EditZap({
   const [items, setItems] = useState<any[]>([]);
   const [currentEvent, setCurrentEvent] = useState(null);
   const [currentTab, setCurrentTab] = useState(1);
+  const [selectedRecord, setSelectedRecord] = useState('');
 
   useEffect(() => {
     setCurrentTab(1);
@@ -127,7 +128,10 @@ function EditZap({
         )}
 
         {zapType == ZapCellType.trigger && currentTab == 4 && (
-          <TestTrigger triggerId={zap.id} />
+          <TestTrigger
+            triggerId={zap.id}
+            setSelectedRecord={setSelectedRecord}
+          />
         )}
       </div>
 
@@ -136,6 +140,7 @@ function EditZap({
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
           eventSelected={currentEvent == null ? false : true}
+          selectedRecord={selectedRecord}
         />
       </div>
     </div>
@@ -145,19 +150,25 @@ function EditZap({
 export function EditZapFooter({
   currentTab,
   eventSelected,
+  selectedRecord,
   setCurrentTab,
 }: {
   currentTab: number;
   eventSelected: boolean;
+  selectedRecord: string;
   setCurrentTab: (tabId: number) => void;
 }) {
   return (
     <div className="flex justify-between items-center p-2">
       <button
+        disabled={!eventSelected}
         onClick={() => {
           if (currentTab < 4) {
             setCurrentTab(currentTab + 1);
           } else {
+            currentTab == 4
+              ? localStorage.setItem('selectedRecord', selectedRecord)
+              : '';
             setCurrentTab(1);
           }
         }}

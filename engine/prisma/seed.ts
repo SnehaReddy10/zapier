@@ -33,11 +33,18 @@ async function main() {
     },
   });
 
+  const sendEmailMetaData = JSON.stringify({
+    receiver: 1,
+    subject: 1,
+    body: 1,
+  });
+
   await prismaClient.event.createMany({
     data: [
       {
         name: 'Send Email',
         availableActionsId: gmailAction.id,
+        metaData: sendEmailMetaData,
       },
       {
         name: 'Draft Email',
@@ -62,6 +69,15 @@ async function main() {
         availableActionsId: notionAction.id,
       },
     ],
+  });
+
+  await prismaClient.user.create({
+    data: {
+      email: 'test@gmail.com',
+      firstname: 'test',
+      lastname: 'test-test',
+      password: 'testtest',
+    },
   });
 }
 

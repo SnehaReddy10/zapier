@@ -23,6 +23,7 @@ zapRouter.post('', async (req, res) => {
           create: actions.map((x: any) => ({
             availableActionId: x.availableActionId,
             eventId: x.eventId,
+            metadata: x.metaData,
           })),
         },
         userId: req.userId,

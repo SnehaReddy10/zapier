@@ -3,7 +3,7 @@
 import { createZap, getZapById } from '@/api/zaps';
 import { ZapCellType } from '@/types/Zap';
 import { useState, useEffect } from 'react';
-import Modal from '../Modal';
+import Modal from '../modal/Modal';
 import EditZap from './EditZap';
 import EditorZap from './EditorZap';
 import { useRouter } from 'next/navigation';
@@ -17,16 +17,18 @@ export function Edit({ setCanPublish, publish, zapId }: any) {
   const router = useRouter();
 
   const handleGetUserZapById = async () => {
-    if (zapId) {
-      const result = await getZapById({
-        zapId,
-      });
-      if (result.success) {
-        const zap = result.zap;
-        setActions(zap.actions);
-        setTrigger(zap.trigger);
-      }
+    if (!zapId) {
+      return;
     }
+    const result = await getZapById({
+      zapId,
+    });
+    if (!result.success) {
+      return;
+    }
+    const zap = result.zap;
+    setActions(zap.actions);
+    setTrigger(zap.trigger);
   };
 
   useEffect(() => {
@@ -34,14 +36,11 @@ export function Edit({ setCanPublish, publish, zapId }: any) {
   }, [zapId]);
 
   useEffect(() => {
-    if (
+    const isZapValid =
       trigger?.eventId &&
-      actions.every((x: any) => typeof x.eventId != typeof undefined)
-    ) {
-      setCanPublish(true);
-    } else {
-      setCanPublish(false);
-    }
+      actions.every((x: any) => typeof x.eventId != typeof undefined);
+
+    setCanPublish(isZapValid);
 
     if (publish) {
       createZap({ actions, trigger });
@@ -69,7 +68,7 @@ export function Edit({ setCanPublish, publish, zapId }: any) {
       setTrigger({ ...trigger, eventName: event.name, eventId: event.id });
     } else if (zapType == ZapCellType.action) {
       setActions((x: any) =>
-        x.map((action: any, index: number) => {
+        x.map((action: any) => {
           if (action.index == currentIndex) {
             return { ...action, eventName: event.name, eventId: event.id };
           }
@@ -82,7 +81,7 @@ export function Edit({ setCanPublish, publish, zapId }: any) {
   const setMetadata = (event: any, zapType?: ZapCellType) => {
     if (zapType == ZapCellType.action) {
       setActions((x: any) =>
-        x.map((action: any, index: number) => {
+        x.map((action: any) => {
           if (action.index == currentIndex) {
             return { ...action, metaData: event };
           }
@@ -90,6 +89,16 @@ export function Edit({ setCanPublish, publish, zapId }: any) {
         })
       );
     }
+  };
+
+  const handleTriggerOnClick = (e: any) => {
+    trigger ? setShowEditZap(true) : setModalType(e);
+    setCurrentIndex(1);
+  };
+
+  const handleActionOnClick = (e: any, x: any) => {
+    x.action ? setShowEditZap(true) : setModalType(e);
+    setCurrentIndex(x.index);
   };
 
   return (
@@ -100,32 +109,20 @@ export function Edit({ setCanPublish, publish, zapId }: any) {
           addAction={addAction}
           type={ZapCellType.trigger}
           index={1}
-          onClick={(e) => {
-            if (trigger) {
-              setShowEditZap(true);
-            } else {
-              setModalType(e);
-            }
-            setCurrentIndex(1);
-          }}
+          onClick={handleTriggerOnClick}
         />
+
         {actions.map((x: any, index: number) => (
           <EditorZap
             key={x.id}
-            onClick={(e) => {
-              if (x.action) {
-                setShowEditZap(true);
-              } else {
-                setModalType(e);
-              }
-              setCurrentIndex(x.index);
-            }}
+            onClick={(e) => handleActionOnClick(e, x)}
             action={x}
             type={ZapCellType.action}
             index={index + 1}
             addAction={addAction}
           />
         ))}
+
         {modalType != null && (
           <div
             onClick={() => setModalType((m) => null)}

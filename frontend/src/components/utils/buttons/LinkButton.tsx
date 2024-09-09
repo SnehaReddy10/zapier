@@ -25,6 +25,17 @@ function LinkButton({
       {icon == 'zaps' && <BiSolidZap color="#ff4f00" />}
       <button onClick={() => router.push(link)}>{text}</button>
       {showDropDownIcon && <FaChevronDown size={10} />}
+      {/* {text == 'Log in' && (
+        <div className="flex flex-col items-center justify-center fixed top-[4.5rem] right-[5.5rem] border-gray-60 border-[1px] p-2 bg-green-100">
+          Please use these guest credentials to Login
+          <div>
+            <span className="font-bold">Email</span>: test@gmail.com
+          </div>
+          <div>
+            <span className="font-bold">Password</span>: testtest
+          </div>
+        </div>
+      )} */}
     </div>
   );
 }

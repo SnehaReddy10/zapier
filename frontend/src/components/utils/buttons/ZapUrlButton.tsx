@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SecondaryButton from './SecondaryButton';
-import { ZAP_HOOK_URL } from '../../../config';
+import { ZAP_HOOK_URL } from '../../../../config';
 
 const zapUrl = ZAP_HOOK_URL || '';
 

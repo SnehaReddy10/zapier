@@ -1,34 +1,17 @@
 import { GoPencil } from 'react-icons/go';
 import { RiNotionLine } from 'react-icons/ri';
 import { RxCross2 } from 'react-icons/rx';
-import SecondaryButton from '../buttons/SecondaryButton';
-import EventInput from '../EventInput';
-import { MdAccountCircle } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import { getAvailableEventsForActions } from '@/api/actions';
 import { getAvailableEventsForTrigger } from '@/api/triggers';
 import { ZapCellType } from '@/types/Zap';
-import TertiaryButton from '../buttons/TertiaryButton';
 import { TestTrigger } from './TestTrigger';
-
-const notionNavItems = [
-  {
-    id: 1,
-    title: 'App & event',
-  },
-  {
-    id: 2,
-    title: 'Account',
-  },
-  {
-    id: 3,
-    title: 'Trigger',
-  },
-  {
-    id: 4,
-    title: 'Test',
-  },
-];
+import { EditZapFooter } from './EditorFooter';
+import { ChooseEvent } from '../utils/inputs/ChooseEvent';
+import { ConnectAccount } from './ConnectAccount';
+import { SelectMetadata } from './SelectMetadata';
+import { notionNavItems } from '@/constants/editor-nav-items';
+import { EditZapInputSchema } from '@/interfaces/input-schemas/EditZapInputSchema';
 
 function EditZap({
   zap,
@@ -37,14 +20,7 @@ function EditZap({
   setShowEditZap,
   setShowModal,
   setMetadata,
-}: {
-  zap: any;
-  zapType: ZapCellType;
-  onEventSelect: (event: string, zapType: ZapCellType) => void;
-  setShowEditZap: (show: boolean) => void;
-  setShowModal: (show: ZapCellType) => void;
-  setMetadata: (data: any, zapType: ZapCellType) => void;
-}) {
+}: EditZapInputSchema) {
   const [items, setItems] = useState<any[]>([]);
   const [currentEvent, setCurrentEvent] = useState<any>(null);
   const [currentTab, setCurrentTab] = useState(1);
@@ -88,11 +64,7 @@ function EditZap({
       <div className="h-8 flex gap-2 justify-around items-center border-gray-1000 border-b-[1px]">
         {notionNavItems.map((x) => (
           <div
-            onClick={() => {
-              if (x.id < currentTab) {
-                setCurrentTab(x.id);
-              }
-            }}
+            onClick={() => (x.id < currentTab ? setCurrentTab(x.id) : '')}
             className={`flex items-center font-semibold ${
               x.id > currentTab ? 'text-gray-800' : 'text-black'
             } ${
@@ -118,17 +90,7 @@ function EditZap({
           />
         )}
 
-        {currentTab == 2 && (
-          <ConnectAccount
-            currentEvent={currentEvent}
-            zap={zap}
-            zapType={zapType}
-            items={items}
-            onEventSelect={onEventSelect}
-            setShowModal={setShowModal}
-            setCurrentEvent={setCurrentEvent}
-          />
-        )}
+        {currentTab == 2 && <ConnectAccount zap={zap} />}
 
         {currentTab == 3 && currentEvent && zapType == ZapCellType.action && (
           <SelectMetadata
@@ -157,192 +119,6 @@ function EditZap({
           metadata={requiredMetadata}
         />
       </div>
-    </div>
-  );
-}
-
-export function EditZapFooter({
-  currentTab,
-  eventSelected,
-  selectedRecord,
-  zapType,
-  metadata,
-  setCurrentTab,
-  setMetadata,
-}: {
-  currentTab: number;
-  eventSelected: boolean;
-  selectedRecord: string;
-  zapType: ZapCellType;
-  metadata: string;
-  setCurrentTab: (tabId: number) => void;
-  setMetadata: (data: any, zapType: ZapCellType) => void;
-}) {
-  return (
-    <div className="flex justify-between items-center p-2">
-      <button
-        disabled={!eventSelected}
-        onClick={() => {
-          console.log({ zapType, currentTab });
-          if (zapType == ZapCellType.action && currentTab == 3) {
-            setMetadata(metadata, zapType);
-          }
-          if (currentTab < 4) {
-            setCurrentTab(currentTab + 1);
-          } else {
-            currentTab == 4
-              ? localStorage.setItem('selectedRecord', selectedRecord)
-              : '';
-            setCurrentTab(1);
-          }
-        }}
-        className={`${
-          eventSelected
-            ? 'bg-blue-500 text-white cursor-pointer px-2 font-semibold'
-            : 'cursor-not-allowed text-brown-200 bg-gray-50'
-        } text-xxxs border-[1px] border-gray-1000 p-1 rounded-sm`}
-      >
-        {eventSelected
-          ? currentTab == 4
-            ? 'Continue with selected record'
-            : 'Continue'
-          : 'To continue, choose an event'}
-      </button>
-      <p className="bg-blue-500 rounded-full p-1">
-        <MdAccountCircle size={20} color="white" />
-      </p>
-    </div>
-  );
-}
-
-export function ChooseEvent({
-  zap,
-  setShowModal,
-  zapType,
-  currentEvent,
-  setCurrentEvent,
-  onEventSelect,
-  items,
-}: {
-  zap: any;
-  zapType: ZapCellType;
-  currentEvent: any;
-  items: any;
-  onEventSelect: (event: string, zapType: ZapCellType) => void;
-  setCurrentEvent: (event: any) => void;
-  setShowModal: (show: ZapCellType) => void;
-}) {
-  return (
-    <div className="flex flex-col flex-grow shadow-lg shadow-gray-200">
-      <div className="h-8 flex gap-2 m-2 border-gray-1000 border-b-[1px] items-center rounded-sm px-2 py-1 border-[1px]  cursor-pointer">
-        <img src={zap.image} alt="" className="w-4 h-3" />
-        <span className="flex flex-1 font-bold">
-          {zap.trigger ?? zap.action}
-        </span>
-        <SecondaryButton
-          text="Change"
-          onClick={() => {
-            setShowModal(zapType);
-          }}
-        />
-      </div>
-      <div className="flex flex-col flex-grow justify-between">
-        <div className="flex flex-col flex-grow gap-1 m-2">
-          <EventInput
-            selectedItem={currentEvent}
-            onSelect={(e: any) => {
-              setCurrentEvent(e);
-              onEventSelect(e, zapType);
-            }}
-            items={items}
-            label={'Event'}
-            placeHolder={'Choose an event'}
-            required={true}
-          />
-          <p className="text-xxxxs">This is performed when the Zap runs.</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export function ConnectAccount({
-  zap,
-  setShowModal,
-  zapType,
-  currentEvent,
-  setCurrentEvent,
-  onEventSelect,
-  items,
-}: {
-  zap: any;
-  zapType: ZapCellType;
-  currentEvent: any;
-  items: any;
-  onEventSelect: (event: string, zapType: ZapCellType) => void;
-  setCurrentEvent: (event: any) => void;
-  setShowModal: (show: ZapCellType) => void;
-}) {
-  return (
-    <div className="m-4 flex flex-col gap-2">
-      <div className="h-10 flex gap-2 border-gray-1000 border-b-[1px] items-center rounded-sm px-2 py-2 border-[1px]  cursor-pointer">
-        <img src={zap.image} alt="" className="w-4 h-3" />
-        <span className="flex flex-1 font-bold">
-          {zap.trigger ?? zap.action}
-        </span>
-        <TertiaryButton
-          onclick={() => {}}
-          text="Sign in"
-          className="bg-blue-500 text-white hover:bg-blue-800 p-1"
-        />
-      </div>
-      <p className="text-gray-600 text-xxxxs">
-        {zap.trigger ?? zap.action} is a secure partner with Zapier.{' '}
-        <a className="text-blue-500 underline" href="">
-          Your credentials are encrypted & can be removed at any time
-        </a>
-        . You can{' '}
-        <a className="text-blue-500 underline" href="">
-          manage all of your connected accounts here
-        </a>
-        .
-      </p>
-    </div>
-  );
-}
-
-export function SelectMetadata({
-  metadata,
-  requiredMetadata,
-  setRequiredMetadata,
-}: {
-  metadata: string;
-  requiredMetadata: string;
-  setRequiredMetadata: (e: any) => void;
-}) {
-  const payload = JSON.parse(metadata);
-  const selectedRecord = JSON.parse(
-    localStorage.getItem('selectedRecord') || ''
-  );
-  const options = JSON.parse(selectedRecord.payload);
-
-  return (
-    <div className="m-2 flex flex-col gap-2">
-      {Object.keys(payload).map((x: any) => {
-        return (
-          <EventInput
-            label={x}
-            required={payload[x] == 1}
-            selectedItem={{ name: requiredMetadata[x] }}
-            items={Object.keys(options).map((x) => ({ id: x, name: x }))}
-            placeHolder={x}
-            onSelect={(e) => {
-              console.log({ e });
-              setRequiredMetadata((y: any) => ({ ...y, [x]: e.name }));
-            }}
-          />
-        );
-      })}
     </div>
   );
 }

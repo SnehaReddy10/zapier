@@ -1,9 +1,9 @@
 'use client';
 
 import { RxChevronDown } from 'react-icons/rx';
-import TertiaryButton from './buttons/TertiaryButton';
+import TertiaryButton from './utils/buttons/TertiaryButton';
 import Zap from './Zap';
-import SearchBar from './SearchBar';
+import SearchBar from './utils/search/SearchBar';
 import { useEffect, useState } from 'react';
 import { CiFolderOn } from 'react-icons/ci';
 import { GoZap } from 'react-icons/go';

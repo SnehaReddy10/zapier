@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import InputBox from './InputBox';
-import Button from './buttons/Button';
-import AuthButton from './buttons/AuthButton';
+import InputBox from './utils/inputs/InputBox';
+import Button from './utils/buttons/Button';
+import AuthButton from './utils/buttons/AuthButton';
 import { useState } from 'react';
 import { LoginUser } from '@/api/auth';
 import { useRouter } from 'next/navigation';
@@ -16,13 +16,16 @@ export function Login() {
 
   const handleSetEmail = (email: string) =>
     setEmail((e) => ({ ...e, email: email }));
+
   const handleSetPassword = (password: string) =>
     setPassword((e) => ({ ...e, password: password }));
+
   const loginUser = async () => {
     const result = await LoginUser({
       email: email.email,
       password: password.password,
     });
+
     if (result.success) {
       setEmail({ email: '', error: '' });
       setPassword({ password: '', error: '' });

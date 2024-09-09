@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { RiAsterisk } from 'react-icons/ri';
-import Search from './Search';
+import Search from '../search/Search';
 
 function EventInput({
   selectedItem,

@@ -1,6 +1,6 @@
 'use client';
 import { IoIosAdd } from 'react-icons/io';
-import LinkButton from './buttons/LinkButton';
+import LinkButton from './utils/buttons/LinkButton';
 import { usePathname } from 'next/navigation';
 
 export const navItems = [

@@ -1,5 +1,5 @@
 import { Login as LoginComponent } from '@/components/Login';
-import AuthButton from '@/components/buttons/AuthButton';
+import AuthButton from '@/components/utils/buttons/AuthButton';
 
 function Login() {
   return (

@@ -1,4 +1,4 @@
-import Button from './buttons/Button';
+import Button from './utils/buttons/Button';
 import { IoMdCheckmark } from 'react-icons/io';
 
 function Hero() {

@@ -1,8 +1,8 @@
 'use client';
 
 import { LiaSearchSolid } from 'react-icons/lia';
-import Logo from './Logo';
-import TertiaryButton from './buttons/TertiaryButton';
+import Logo from './utils/Logo';
+import TertiaryButton from './utils/buttons/TertiaryButton';
 import { RxCross2 } from 'react-icons/rx';
 import { IoIosGlobe, IoIosHelpCircleOutline } from 'react-icons/io';
 

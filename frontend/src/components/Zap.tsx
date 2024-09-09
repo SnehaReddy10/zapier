@@ -3,7 +3,7 @@
 import { Zap as ZapSchema } from '@/types/Zap';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { RxDragHandleDots2 } from 'react-icons/rx';
-import ToggleButton from './buttons/ToggleButton';
+import ToggleButton from './utils/buttons/ToggleButton';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 

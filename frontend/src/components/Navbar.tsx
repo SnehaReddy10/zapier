@@ -1,6 +1,34 @@
-import Logo from './Logo';
-import Button from './buttons/Button';
-import LinkButton from './buttons/LinkButton';
+import Logo from './utils/Logo';
+import Button from './utils/buttons/Button';
+import LinkButton from './utils/buttons/LinkButton';
+
+const navItems = [
+  {
+    text: 'Product',
+    link: 'product',
+    showDropDownIcon: true,
+  },
+  {
+    text: 'Solutions',
+    link: 'solutions',
+    showDropDownIcon: true,
+  },
+  {
+    text: 'Resources',
+    link: 'resources',
+    showDropDownIcon: true,
+  },
+  {
+    text: 'Enterprise',
+    link: 'enterprise',
+    showDropDownIcon: false,
+  },
+  {
+    text: 'Pricing',
+    link: 'pricing',
+    showDropDownIcon: false,
+  },
+];
 
 function Navbar() {
   return (
@@ -8,11 +36,13 @@ function Navbar() {
       <div className="flex gap-1 items-center">
         {/* change to LOGO */}
         <Logo />
-        <LinkButton text="Product" link="product" showDropDownIcon={true} />
-        <LinkButton text="Solutions" link="solutions" showDropDownIcon={true} />
-        <LinkButton text="Resources" link="resources" showDropDownIcon={true} />
-        <LinkButton text="Enterprise" link="enterprise" />
-        <LinkButton text="Pricing" link="pricing" />
+        {navItems.map((x) => (
+          <LinkButton
+            text={x.text}
+            link={x.link}
+            showDropDownIcon={x.showDropDownIcon}
+          />
+        ))}
       </div>
       <div className="flex gap-1 items-center">
         <LinkButton

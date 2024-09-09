@@ -2,9 +2,9 @@ import { findNewRecords } from '@/api/triggers';
 import { useState, useEffect } from 'react';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { LiaDotCircle } from 'react-icons/lia';
-import Search from '../Search';
-import ZapUrlButton from '../buttons/ZapUrlButton';
-import SecondaryButton from '../buttons/SecondaryButton';
+import Search from '../utils/search/Search';
+import ZapUrlButton from '../utils/buttons/ZapUrlButton';
+import SecondaryButton from '../utils/buttons/SecondaryButton';
 
 interface Record {
   availableTriggersId: string;

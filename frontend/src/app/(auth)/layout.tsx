@@ -1,10 +1,10 @@
 'use client';
 
-import Button from '@/components/buttons/Button';
+import Button from '@/components/utils/buttons/Button';
 import '.././globals.css';
 import { usePathname } from 'next/navigation';
-import LinkButton from '@/components/buttons/LinkButton';
-import Logo from '@/components/Logo';
+import LinkButton from '@/components/utils/buttons/LinkButton';
+import Logo from '@/components/utils/Logo';
 
 export default function AuthLayout({
   children,

@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import AuthButton from './buttons/AuthButton';
-import InputBox from './InputBox';
-import Button from './buttons/Button';
+import AuthButton from './utils/buttons/AuthButton';
+import InputBox from './utils/inputs/InputBox';
+import Button from './utils/buttons/Button';
 import { CreateUser } from '@/api/auth';
 import { useRouter } from 'next/navigation';
 import { USER } from '@/constants/error-codes';

@@ -31,7 +31,7 @@ export function sendEmail({
     if (err) {
       console.log(err);
     } else {
-      console.log('email send', info.response);
+      console.log('email sent', info.response);
     }
   });
 }

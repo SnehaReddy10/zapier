@@ -22,7 +22,7 @@ function EventInput({
     <div className="flex flex-col gap-1">
       <p className="flex gap-1">
         <RiAsterisk size={10} />
-        <span className="font-semibold">{label}</span>
+        <span className="font-semibold capitalize">{label}</span>
         {required && '(required)'}
       </p>
       <div className="relative flex gap-1 items-center h-6 border-[1px] border-gray-400 rounded-sm hover:border-purple-700">
@@ -32,7 +32,7 @@ function EventInput({
           setShowEvents={setShowEvents}
         />
         {showEvents && (
-          <div className="absolute overflow-y-scroll max-h-40 top-[42px] bg-gray-90 py-2 px-1 shadow-lg shadow-gray-100 w-full">
+          <div className="z-20 absolute overflow-y-scroll max-h-40 top-[42px] bg-gray-90 py-2 px-1 shadow-lg shadow-gray-100 w-full">
             <p className="uppercase text-gray-500 font-bold mb-1 px-1">
               Create
             </p>

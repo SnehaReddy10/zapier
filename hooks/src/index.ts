@@ -37,10 +37,15 @@ app.get('/find-new-records/:triggerId', async (req, res) => {
 app.post('/:userId/:zapId', async (req, res) => {
   try {
     const { userId, zapId } = req.params;
+    const { metadata } = req.body;
 
     const [zaps, zapRuns] = await prismaClient.$transaction([
-      prismaClient.zaps.create({ data: { zapId, userId } }),
-      prismaClient.zapRun.create({ data: { zapId, userId } }),
+      prismaClient.zaps.create({
+        data: { zapId, userId, metadata: JSON.stringify(metadata) },
+      }),
+      prismaClient.zapRun.create({
+        data: { zapId, userId, metadata: JSON.stringify(metadata) },
+      }),
     ]);
 
     res.json({ success: true });

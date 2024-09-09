@@ -21,7 +21,7 @@ function Search({
         value={selectedItem?.name ?? ''}
         type="text"
         placeholder={placeHolder}
-        className="absolute px-6 p-1 w-full appearance-none active:border-none select-none"
+        className="capitalize absolute px-6 p-1 w-full appearance-none active:border-none select-none"
       />
     </div>
   );

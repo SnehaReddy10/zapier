@@ -21,14 +21,20 @@ async function main() {
     await kafkaProducer.send({
       topic: TOPIC_NAME,
       messages: pendingZaps.map((x) => {
-        return { value: x.zapId };
+        return {
+          value: JSON.stringify({
+            userId: x.userId,
+            zapId: x.zapId,
+            metadata: x.metadata,
+          }),
+        };
       }),
     });
 
     await prismaClient.zapRun.deleteMany({
       where: {
         zapId: {
-          in: pendingZaps.map((x) => x.zapId),
+          in: pendingZaps.map((x: any) => x.zapId),
         },
       },
     });

@@ -36,17 +36,20 @@ function EditZap({
   onEventSelect,
   setShowEditZap,
   setShowModal,
+  setMetadata,
 }: {
   zap: any;
   zapType: ZapCellType;
   onEventSelect: (event: string, zapType: ZapCellType) => void;
   setShowEditZap: (show: boolean) => void;
   setShowModal: (show: ZapCellType) => void;
+  setMetadata: (data: any, zapType: ZapCellType) => void;
 }) {
   const [items, setItems] = useState<any[]>([]);
-  const [currentEvent, setCurrentEvent] = useState(null);
+  const [currentEvent, setCurrentEvent] = useState<any>(null);
   const [currentTab, setCurrentTab] = useState(1);
   const [selectedRecord, setSelectedRecord] = useState('');
+  const [requiredMetadata, setRequiredMetadata] = useState<any>({});
 
   useEffect(() => {
     setCurrentTab(1);
@@ -127,6 +130,14 @@ function EditZap({
           />
         )}
 
+        {currentTab == 3 && currentEvent && zapType == ZapCellType.action && (
+          <SelectMetadata
+            metadata={currentEvent?.metaData}
+            requiredMetadata={requiredMetadata}
+            setRequiredMetadata={setRequiredMetadata}
+          />
+        )}
+
         {zapType == ZapCellType.trigger && currentTab == 4 && (
           <TestTrigger
             triggerId={zap.id}
@@ -141,6 +152,9 @@ function EditZap({
           setCurrentTab={setCurrentTab}
           eventSelected={currentEvent == null ? false : true}
           selectedRecord={selectedRecord}
+          zapType={zapType}
+          setMetadata={setMetadata}
+          metadata={requiredMetadata}
         />
       </div>
     </div>
@@ -151,18 +165,28 @@ export function EditZapFooter({
   currentTab,
   eventSelected,
   selectedRecord,
+  zapType,
+  metadata,
   setCurrentTab,
+  setMetadata,
 }: {
   currentTab: number;
   eventSelected: boolean;
   selectedRecord: string;
+  zapType: ZapCellType;
+  metadata: string;
   setCurrentTab: (tabId: number) => void;
+  setMetadata: (data: any, zapType: ZapCellType) => void;
 }) {
   return (
     <div className="flex justify-between items-center p-2">
       <button
         disabled={!eventSelected}
         onClick={() => {
+          console.log({ zapType, currentTab });
+          if (zapType == ZapCellType.action && currentTab == 3) {
+            setMetadata(metadata, zapType);
+          }
           if (currentTab < 4) {
             setCurrentTab(currentTab + 1);
           } else {
@@ -283,6 +307,42 @@ export function ConnectAccount({
         </a>
         .
       </p>
+    </div>
+  );
+}
+
+export function SelectMetadata({
+  metadata,
+  requiredMetadata,
+  setRequiredMetadata,
+}: {
+  metadata: string;
+  requiredMetadata: string;
+  setRequiredMetadata: (e: any) => void;
+}) {
+  const payload = JSON.parse(metadata);
+  const selectedRecord = JSON.parse(
+    localStorage.getItem('selectedRecord') || ''
+  );
+  const options = JSON.parse(selectedRecord.payload);
+
+  return (
+    <div className="m-2 flex flex-col gap-2">
+      {Object.keys(payload).map((x: any) => {
+        return (
+          <EventInput
+            label={x}
+            required={payload[x] == 1}
+            selectedItem={{ name: requiredMetadata[x] }}
+            items={Object.keys(options).map((x) => ({ id: x, name: x }))}
+            placeHolder={x}
+            onSelect={(e) => {
+              console.log({ e });
+              setRequiredMetadata((y: any) => ({ ...y, [x]: e.name }));
+            }}
+          />
+        );
+      })}
     </div>
   );
 }

@@ -7,6 +7,7 @@ export function CreateZapMapper({ actions, trigger }: any) {
     actions: actions.map((x: any) => ({
       availableActionId: x.id,
       eventId: x.eventId,
+      metaData: JSON.stringify(x.metaData),
     })),
   };
 }

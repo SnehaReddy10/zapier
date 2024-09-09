@@ -28,7 +28,7 @@ export function TestTrigger({
     if (result.success) {
       setRecords(result.records);
       setRecord(result.records[0].id);
-      setSelectedRecord(result.records[0].id);
+      setSelectedRecord(JSON.stringify(result.records[0]));
     }
   };
 
@@ -85,7 +85,7 @@ export function TestTrigger({
                 <div
                   onClick={() => {
                     setRecord(x.id);
-                    setSelectedRecord(x.id);
+                    setSelectedRecord(JSON.stringify(x));
                   }}
                   key={x.id}
                   className={`flex gap-1 p-1 items-center justify-center ${

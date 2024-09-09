@@ -79,6 +79,19 @@ export function Edit({ setCanPublish, publish, zapId }: any) {
     }
   };
 
+  const setMetadata = (event: any, zapType?: ZapCellType) => {
+    if (zapType == ZapCellType.action) {
+      setActions((x: any) =>
+        x.map((action: any, index: number) => {
+          if (action.index == currentIndex) {
+            return { ...action, metaData: event };
+          }
+          return action;
+        })
+      );
+    }
+  };
+
   return (
     <div className="flex flex-grow max-h-screen">
       <div className="w-full min-h-screen scroll-smooth overflow-y-scroll py-14 no-scrollbar cursor-grab bg-gray-50 flex flex-col gap-1 items-center pt-10">
@@ -138,6 +151,7 @@ export function Edit({ setCanPublish, publish, zapId }: any) {
               ? trigger
               : actions.find((x: any) => x.index == currentIndex)
           }
+          setMetadata={setMetadata}
         />
       )}
     </div>

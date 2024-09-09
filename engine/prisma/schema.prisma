@@ -57,6 +57,7 @@ model Action {
   zapId             String?
   event             Event?           @relation(fields: [eventId], references: [id])
   eventId           String?
+  metadata          String?
 }
 
 model Trigger {
@@ -70,13 +71,15 @@ model Trigger {
 }
 
 model zaps {
-  zapId  String @unique
-  userId String @unique
+  zapId    String @unique
+  userId   String @unique
+  metadata String
 }
 
 model zapRun {
-  zapId  String @unique
-  userId String @unique
+  zapId    String @unique
+  userId   String @unique
+  metadata String
 }
 
 model Event {
@@ -88,6 +91,7 @@ model Event {
   availableActionsId  String?
   Action              Action[]
   Trigger             Trigger[]
+  metaData            String?
 }
 
 model HookReq {

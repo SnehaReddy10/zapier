@@ -42,3 +42,19 @@ export async function getZapById({ zapId }: { zapId: string }) {
     return { success: false, error: err.response.data.error };
   }
 }
+
+export async function toggleZap({ zapId }: { zapId: string }) {
+  try {
+    const result = await axios.post(
+      `${BACKEND_ENGINE_URL}/zap/toggle/${zapId}`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN)}` },
+      }
+    );
+    return result.data;
+  } catch (err: any) {
+    console.log(err.response.data.error);
+    return { success: false, error: err.response.data.error };
+  }
+}

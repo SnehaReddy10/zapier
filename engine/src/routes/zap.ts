@@ -27,6 +27,7 @@ zapRouter.post('', async (req, res) => {
           })),
         },
         userId: req.userId,
+        isRunning: true,
       },
       select: {
         trigger: { select: { trigger: true } },
@@ -110,6 +111,27 @@ zapRouter.get('/:zapId', authMiddleware, async (req, res) => {
         },
       },
     });
+  } catch (err) {
+    console.log('Create Zap By Id', err);
+    return res.json({ success: false, message: GENERIC.ServiceUnavailable });
+  }
+});
+
+zapRouter.post('/toggle/:zapId', authMiddleware, async (req, res) => {
+  try {
+    const zapId = req.params.zapId;
+    const zap = await prismaClient.zap.findFirst({ where: { id: zapId } });
+    if (!zap) {
+      return res
+        .status(STATUS_CODES.BadRequest)
+        .json({ success: false, message: 'Zap Not Found' });
+    }
+    await prismaClient.zap.update({
+      where: { id: zapId },
+      data: { isRunning: !zap.isRunning },
+    });
+
+    return res.json({ success: true });
   } catch (err) {
     console.log('Create Zap By Id', err);
     return res.json({ success: false, message: GENERIC.ServiceUnavailable });

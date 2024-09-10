@@ -6,11 +6,19 @@ import { RxDragHandleDots2 } from 'react-icons/rx';
 import ToggleButton from './utils/buttons/ToggleButton';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toggleZap } from '@/api/zaps';
 
 function Zap({ zap }: { zap: ZapSchema }) {
   const [running, setRunning] = useState(zap.running);
   const [selected, setSelected] = useState(false);
   const router = useRouter();
+
+  const handleZapToggle = async () => {
+    const result = await toggleZap({ zapId: zap.id });
+    if (result.success) {
+      setRunning((x) => !x);
+    }
+  };
 
   const currentTime = new Date();
   const mins = currentTime.getMinutes() - zap.lastEdit?.getMinutes();
@@ -18,7 +26,6 @@ function Zap({ zap }: { zap: ZapSchema }) {
 
   return (
     <tr
-      onClick={() => router.push(`/editor/${zap?.id}`)}
       className={`flex gap-4 items-center py-1 border-b-[2px] border-[#ece9df] ${
         selected ? 'bg-purple-100' : ''
       }`}
@@ -68,7 +75,7 @@ function Zap({ zap }: { zap: ZapSchema }) {
         </div>
       </td>
       <td
-        onClick={() => router.push('/editor')}
+        onClick={() => router.push(`/editor/${zap?.id}`)}
         className="flex flex-1 font-semibold hover:underline hover:text-[#503ebd] capitalize hover:cursor-pointer"
       >
         {zap.title ?? 'Untitled'}
@@ -80,7 +87,7 @@ function Zap({ zap }: { zap: ZapSchema }) {
       <td>
         <div className="relative">
           <p className="h-2 rounded-full w-5 bg-slate-400"></p>
-          <ToggleButton isOn={running} onClick={() => setRunning((z) => !z)} />
+          <ToggleButton isOn={running} onClick={() => handleZapToggle()} />
         </div>
       </td>
       <td>

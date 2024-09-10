@@ -19,12 +19,12 @@ async function main() {
   await kafkaConsumer.subscribe({ topic: TOPIC_NAME, fromBeginning: true });
 
   await kafkaConsumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
+    eachMessage: async ({ message }) => {
       let { userId, zapId, metadata } = JSON.parse(
         message.value?.toString() || ''
       );
       const zap = await prismaClient.zap.findFirst({
-        where: { userId, id: zapId },
+        where: { userId, id: zapId, isRunning: true },
         include: {
           actions: true,
           trigger: true,

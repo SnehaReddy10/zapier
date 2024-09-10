@@ -1,9 +1,7 @@
 'use client';
 
-import React from 'react';
 import InputBox from './utils/inputs/InputBox';
 import Button from './utils/buttons/Button';
-import AuthButton from './utils/buttons/AuthButton';
 import { useState } from 'react';
 import { LoginUser } from '@/api/auth';
 import { useRouter } from 'next/navigation';
@@ -43,7 +41,7 @@ export function Login() {
     <div className="flex flex-col mx-10 justify-center py-5">
       <h2 className="font-sans font-semibold">Log in to your account</h2>
       <div className="flex flex-col gap-3 border-[1px] p-4 my-5">
-        <AuthButton
+        {/* <AuthButton
           authType="Google"
           className="bg-[#4285F4] hover:bg-[#3367d6] text-white font-semibold"
           text="Continue with Google"
@@ -67,7 +65,8 @@ export function Login() {
           <p className="w-full border-b-[1px] border-gray-200" />
           <span className="text-xxxs text-gray-500 font-semibold">OR</span>
           <p className="w-full border-b-[1px] border-gray-200" />
-        </div>
+        </div> */}
+        <p className="font-bold text-xxs">Welcome back!</p>
         <InputBox
           onChange={handleSetEmail}
           placeHolder="Email"
@@ -83,6 +82,7 @@ export function Login() {
           error={password.error}
         />
         <Button
+          primary={true}
           onClick={loginUser}
           disabled={email.email == '' || password.password == ''}
           text="Continue"

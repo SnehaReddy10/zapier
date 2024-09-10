@@ -5,14 +5,26 @@ import TertiaryButton from './utils/buttons/TertiaryButton';
 import Zap from './Zap';
 import SearchBar from './utils/search/SearchBar';
 import { useEffect, useState } from 'react';
-import { CiFolderOn } from 'react-icons/ci';
-import { GoZap } from 'react-icons/go';
 import { getAllZaps } from '@/api/zaps';
-import { useRouter } from 'next/navigation';
+import { DropDown } from './utils/DropDown';
+import { GoZap } from 'react-icons/go';
+import { CiFolderOn } from 'react-icons/ci';
+
+const dropDownList = [
+  {
+    title: 'New Zap',
+    link: '/editor',
+    icon: <GoZap size={15} color="black" className="col-span-1" />,
+  },
+  {
+    title: 'New Folder',
+    link: '/zaps',
+    icon: <CiFolderOn size={15} color="black" className="col-span-1" />,
+  },
+];
 
 function ZapList() {
   const [zaps, setZaps] = useState<any[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
     getAllZaps().then((res: any) => {
@@ -23,6 +35,7 @@ function ZapList() {
   }, []);
 
   const [showCreateDropDown, setShowCreateDropdown] = useState(false);
+
   return (
     <div className="text-[#2e2f2f] p-3 text-xxs w-full border-l-[1px] border-t-[1px] border-[#ebe8e1]">
       <SearchBar />
@@ -36,7 +49,12 @@ function ZapList() {
             text="Create"
             className="bg-[#695be8] text-white hover:bg-[#503ebd]"
           />
-          {showCreateDropDown && <ZapDropDown router={router} />}
+          {showCreateDropDown && (
+            <DropDown
+              dropDownList={dropDownList}
+              itemClassName="hover:bg-[#f7f6fd] hover:text-[#695be8]"
+            />
+          )}
         </div>
       </div>
 
@@ -69,25 +87,6 @@ function ZapList() {
           ))}
         </tbody>
       </table>
-    </div>
-  );
-}
-
-export function ZapDropDown({ router }: any) {
-  return (
-    <div className="bg-gray-90 shadow-lg p-2 z-10 shadow-[#e0dedb] w-max absolute end-0 flex flex-col gap-1 items-center m-1">
-      <div className="grid grid-cols-1 gap-1 items-center">
-        <div className="flex gap-1 p-1 items-center hover:bg-[#f7f6fd] hover:text-[#695be8]">
-          <GoZap color="black" size={15} className="col-span-1" />
-          <button onClick={() => router.push('/editor')} className="col-span-3">
-            New Zap
-          </button>
-        </div>
-        <div className="flex gap-1 p-1 items-center hover:bg-[#f7f6fd] hover:text-[#695be8]">
-          <CiFolderOn size={15} color="black" className="col-span-1" />
-          <p className="col-span-3">New Folder</p>
-        </div>
-      </div>
     </div>
   );
 }

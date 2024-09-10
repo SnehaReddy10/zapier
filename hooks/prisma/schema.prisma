@@ -33,11 +33,12 @@ model AvailableTriggers {
 }
 
 model Zap {
-  id      String   @id @default(uuid())
-  trigger Trigger?
-  actions Action[]
-  User    User?    @relation(fields: [userId], references: [id])
-  userId  String?
+  id        String   @id @default(uuid())
+  trigger   Trigger?
+  actions   Action[]
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  isRunning Boolean
 }
 
 model User {
@@ -71,16 +72,14 @@ model Trigger {
 }
 
 model zaps {
-  id       String @unique @default(uuid())
-  zapId    String
-  userId   String
+  zapId    String @unique
+  userId   String @unique
   metadata String
 }
 
 model zapRun {
-  id       String @unique @default(uuid())
-  zapId    String
-  userId   String
+  zapId    String @unique
+  userId   String @unique
   metadata String
 }
 

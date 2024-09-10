@@ -36,27 +36,10 @@ function ZapList() {
             text="Create"
             className="bg-[#695be8] text-white hover:bg-[#503ebd]"
           />
-          {showCreateDropDown && (
-            <div className="bg-gray-90 shadow-lg p-2 z-10 shadow-[#e0dedb] w-max absolute end-0 flex flex-col gap-1 items-center m-1">
-              <div className="grid grid-cols-1 gap-1 items-center">
-                <div className="flex gap-1 p-1 items-center hover:bg-[#f7f6fd] hover:text-[#695be8]">
-                  <GoZap color="black" size={15} className="col-span-1" />
-                  <button
-                    onClick={() => router.push('/editor')}
-                    className="col-span-3"
-                  >
-                    New Zap
-                  </button>
-                </div>
-                <div className="flex gap-1 p-1 items-center hover:bg-[#f7f6fd] hover:text-[#695be8]">
-                  <CiFolderOn size={15} color="black" className="col-span-1" />
-                  <p className="col-span-3">New Folder</p>
-                </div>
-              </div>
-            </div>
-          )}
+          {showCreateDropDown && <ZapDropDown router={router} />}
         </div>
       </div>
+
       <table className="table-auto w-full mt-2">
         <thead>
           <tr className="flex gap-4 items-center py-1 border-b-[2px] border-[#ece9df]">
@@ -86,6 +69,25 @@ function ZapList() {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+export function ZapDropDown({ router }: any) {
+  return (
+    <div className="bg-gray-90 shadow-lg p-2 z-10 shadow-[#e0dedb] w-max absolute end-0 flex flex-col gap-1 items-center m-1">
+      <div className="grid grid-cols-1 gap-1 items-center">
+        <div className="flex gap-1 p-1 items-center hover:bg-[#f7f6fd] hover:text-[#695be8]">
+          <GoZap color="black" size={15} className="col-span-1" />
+          <button onClick={() => router.push('/editor')} className="col-span-3">
+            New Zap
+          </button>
+        </div>
+        <div className="flex gap-1 p-1 items-center hover:bg-[#f7f6fd] hover:text-[#695be8]">
+          <CiFolderOn size={15} color="black" className="col-span-1" />
+          <p className="col-span-3">New Folder</p>
+        </div>
+      </div>
     </div>
   );
 }

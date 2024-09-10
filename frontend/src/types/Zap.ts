@@ -1,6 +1,7 @@
 export type Zap = {
   id: string;
   title: string;
+  trigger: Trigger;
   actions: any[];
   lastEdit: Date;
   running: boolean;
@@ -17,7 +18,7 @@ export enum ZapCellType {
 }
 
 export type Action = {
-  id: String;
+  id: string;
   action: string;
   interval: string;
   description: string;
@@ -26,10 +27,11 @@ export type Action = {
 };
 
 export type Trigger = {
-  id: String;
+  id: string;
   trigger: string;
   interval: string;
   description: string;
   eventId: string;
   eventName: string;
+  image: string;
 };

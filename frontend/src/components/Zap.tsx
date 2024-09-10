@@ -49,13 +49,19 @@ function Zap({ zap }: { zap: ZapSchema }) {
       </td>
       <td>
         <div className="flex">
-          <div className="flex gap-1">
+          <div className="flex">
+            <img
+              key={zap.trigger.id}
+              src={zap.trigger.image}
+              alt="trigger"
+              className="w-5 h-4 p-[2px] mr-0 border-gray-60 border-[1px]"
+            />
             {zap.actions.map((x) => (
               <img
                 key={x.action.id}
-                src={x.action.image}
+                src={x.image}
                 alt=""
-                className="w-4 h-3"
+                className="w-5 h-4 p-1 ml-0 border-gray-60 border-[1px]"
               />
             ))}
           </div>

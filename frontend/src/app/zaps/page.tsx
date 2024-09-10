@@ -1,10 +1,22 @@
+'use client';
+
 import Appbar from '@/components/Appbar';
 import ProfessionalTier from '@/components/ProfessionalTier';
 import Sidebar from '@/components/Sidebar';
 import ZapList from '@/components/ZapList';
-import React from 'react';
+import { TOKEN } from '@/constants';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 function Zaps() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!localStorage.getItem(TOKEN)) {
+      router.push('/login');
+    }
+  }, []);
+
   return (
     <div>
       <ProfessionalTier />

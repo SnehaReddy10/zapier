@@ -30,8 +30,10 @@ export function Login() {
       router.push('/zaps');
     } else {
       if (result.error.code == USER.NOT_FOUND) {
+        setPassword((p) => ({ ...p, error: '' }));
         setEmail((e) => ({ ...e, error: result.error.message }));
       } else if (result.error.code == USER.INCORRECT_PASSWORD) {
+        setEmail((e) => ({ ...e, error: '' }));
         setPassword((e) => ({ ...e, error: result.error.message }));
       }
     }

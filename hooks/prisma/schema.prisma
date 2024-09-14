@@ -72,14 +72,16 @@ model Trigger {
 }
 
 model zaps {
-  zapId    String @unique
-  userId   String @unique
+  id       String @unique @default(uuid())
+  zapId    String
+  userId   String
   metadata String
 }
 
 model zapRun {
-  zapId    String @unique
-  userId   String @unique
+  id       String @unique @default(uuid())
+  zapId    String
+  userId   String
   metadata String
 }
 

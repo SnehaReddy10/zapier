@@ -75,6 +75,7 @@ export function Login() {
           error={email.error}
         />
         <InputBox
+          type="password"
           onChange={handleSetPassword}
           placeHolder="Password"
           label="Password"

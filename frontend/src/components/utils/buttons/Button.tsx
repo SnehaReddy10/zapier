@@ -28,8 +28,8 @@ function Button({
         primary
           ? 'bg-[#ff4f00] border-2 border-[#ff4f00] text-white'
           : `text-black border-[1px] ${
-              disabled ? '' : 'hover:border-2'
-            } border-black`
+              disabled ? '' : 'hover:border-2 border-black'
+            } `
       } transition-all ease font-semibold rounded-full ${
         size == 'sm'
           ? 'text-xxs py-[3px] px-3 hover:shadow-lg'

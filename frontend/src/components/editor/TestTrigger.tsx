@@ -51,7 +51,7 @@ export function TestTrigger({
         <p className="text-xs text-gray-60">
           You’ll need to configure your application with this Zap’s webhook URL.
         </p>
-        <ZapUrlButton />
+        <ZapUrlButton triggerId={triggerId} />
         <p className="text-justify">
           We‘ve generated a custom webhook URL for you to send requests to. You
           can add silent/ if your application prefers getting an empty response.

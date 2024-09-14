@@ -18,9 +18,10 @@ export function SelectMetadata({
 
   return (
     <div className="m-2 flex flex-col gap-2">
-      {Object.keys(payload).map((x: any) => {
+      {Object.keys(payload).map((x: any, index: number) => {
         return (
           <EventInput
+            key={index}
             label={x}
             required={payload[x] == 1}
             selectedItem={{ name: requiredMetadata[x] }}

@@ -4,26 +4,31 @@ import LinkButton from './utils/buttons/LinkButton';
 
 const navItems = [
   {
+    id: 1,
     text: 'Product',
     link: 'product',
     showDropDownIcon: true,
   },
   {
+    id: 2,
     text: 'Solutions',
     link: 'solutions',
     showDropDownIcon: true,
   },
   {
+    id: 3,
     text: 'Resources',
     link: 'resources',
     showDropDownIcon: true,
   },
   {
+    id: 4,
     text: 'Enterprise',
     link: 'enterprise',
     showDropDownIcon: false,
   },
   {
+    id: 5,
     text: 'Pricing',
     link: 'pricing',
     showDropDownIcon: false,
@@ -38,6 +43,7 @@ function Navbar() {
         <Logo />
         {navItems.map((x) => (
           <LinkButton
+            key={x.id}
             text={x.text}
             link={x.link}
             showDropDownIcon={x.showDropDownIcon}

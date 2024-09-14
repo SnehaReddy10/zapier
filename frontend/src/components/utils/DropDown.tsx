@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 
 interface DropDownListSchema {
+  id: string;
   title: string;
   link: string;
   icon?: any;
@@ -24,7 +25,10 @@ export function DropDown({
     >
       <div className="grid grid-cols-1 gap-1 items-center">
         {dropDownList.map((x: DropDownListSchema) => (
-          <div className={`flex gap-1 p-1 items-center ${itemClassName}`}>
+          <div
+            key={x.id}
+            className={`flex gap-1 p-1 items-center ${itemClassName}`}
+          >
             {x.icon}
             <button
               onClick={() => {

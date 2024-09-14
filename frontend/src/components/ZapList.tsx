@@ -12,11 +12,13 @@ import { CiFolderOn } from 'react-icons/ci';
 
 const dropDownList = [
   {
+    id: '1',
     title: 'New Zap',
     link: '/editor',
     icon: <GoZap size={15} color="black" className="col-span-1" />,
   },
   {
+    id: '2',
     title: 'New Folder',
     link: '/zaps',
     icon: <CiFolderOn size={15} color="black" className="col-span-1" />,

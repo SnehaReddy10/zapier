@@ -16,15 +16,18 @@ import { TOKEN } from '@/constants';
 
 const dropDownList = [
   {
+    id: '1',
     title: 'test@gmail.com',
     link: '/zaps',
   },
   {
+    id: '2',
     title: 'Settings',
     link: '/zaps',
     icon: <IoSettingsOutline size={15} color="black" className="col-span-1" />,
   },
   {
+    id: '3',
     title: 'Log out',
     link: '/',
     icon: <IoIosLogOut size={15} color="black" className="col-span-1" />,
